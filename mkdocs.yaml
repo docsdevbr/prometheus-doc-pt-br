@@ -1,0 +1,10 @@
+### config ###
+
+# See https://www.mkdocs.org/user-guide/configuration/.
+
+INHERIT: !ENV MKDOCS_BASE_CONFIG
+
+### navigation ###
+
+nav:
+  - index.md

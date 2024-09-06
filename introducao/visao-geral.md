@@ -1,7 +1,7 @@
 ---
 source_url: https://github.com/prometheus/docs/blob/main/content/docs/introduction/overview.md
 revision: d837d88c8853b1ce4d0d52c9a054fb0321ba8847
-status: wip
+status: ready
 ---
 
 # Visão geral

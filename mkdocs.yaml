@@ -10,5 +10,60 @@ site_description: Documentação do Prometheus
 ### navigation ###
 
 nav:
-  - index.md
-  - introducao/visao-geral.md
+  - Documentação do Prometheus: index.md
+  - Introdução:
+      - Visão geral: introducao/visao-geral.md
+      - Primeiros passos: introduction/first_steps.md
+      - Comparação com alternativas: introduction/comparison.md
+      - FAQ: introduction/faq.md
+      - Roteiro: introduction/roadmap.md
+      - Documentos de projeto: introduction/design-doc.md
+      - Mídia: introduction/media.md
+      - Glossário: introduction/glossary.md
+      - Suporte de longo prazo: introduction/release-cycle.md
+  - Conceitos:
+      - Modelo de dados: concepts/data_model.md
+      - Tipos de métricas: concepts/metric_types.md
+      - Trabalhos e instâncias: concepts/jobs_instances.md
+  - Visualização:
+      - Navegador de expressão: visualization/browser.md
+      - Grafana: visualization/grafana.md
+      - Modelos de console: visualization/consoles.md
+  - Instrumentação:
+      - Bibliotecas de cliente: instrumenting/clientlibs.md
+      - Escrevendo bibliotecas de cliente: instrumenting/writing_clientlibs.md
+      - Enviando métricas: instrumenting/pushing.md
+      - Exportadores e integrações: instrumenting/exporters.md
+      - Escrevendo exportadores: instrumenting/writing_exporters.md
+      - Formatos de exposição: instrumenting/exposition_formats.md
+  - Operacional:
+      - Segurança: operating/security.md
+      - Integrações: operating/integrations.md
+  - Melhores práticas:
+      - Nomenclatura de métricas e rótulos: practices/naming.md
+      - Consoles e painéis: practices/consoles.md
+      - Instrumentação: practices/instrumentation.md
+      - Histogramas e resumos: practices/histograms.md
+      - Alerta: practices/alerting.md
+      - Regras de gravação: practices/rules.md
+      - Quando usar o Pushgateway: practices/pushing.md
+      - Ajuste de gravação remota: practices/remote_write.md
+  - Guias:
+      - Autenticação básica: guides/basic-auth.md
+      - Monitoramento de métricas de contêiner Docker usando cAdvisor: guides/cadvisor.md
+      - Use a descoberta de serviço baseada em arquivo para descobrir alvos para extração: guides/file-sd.md
+      - Instrumentando uma aplicação Go: guides/go-application.md
+      - Entendendo e usando o padrão de exportador multi-alvo: guides/multi-target-exporter.md
+      - Monitorando métricas do host Linux com o Node Exporter: guides/node-exporter.md
+      - Docker Swarm: guides/dockerswarm.md
+      - Query Log: guides/query-log.md
+      - Criptografia TLS: guides/tls-encryption.md
+  - Tutoriais:
+      - Começando com Prometheus: tutorials/getting_started.md
+      - Entendendo os tipos de métricas: tutorials/understanding_metric_types.md
+      - Instrumentando um servidor HTTP escrito em Go: tutorials/instrumenting_http_server_in_go.md
+      - Visualizando métricas usando Grafana: tutorials/visualizing_metrics_using_grafana.md
+      - Alertas baseados em métricas: tutorials/alerting_based_on_metrics.md
+  - Especificações:
+      - Prometheus Remote-Write 2.0 [EXPERIMENTAL]: specs/remote_write_spec_2_0.md
+      - Prometheus Remote-Write 1.0: specs/remote_write_spec.md

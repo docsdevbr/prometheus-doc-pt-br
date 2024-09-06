@@ -4,7 +4,11 @@
 
 INHERIT: !ENV MKDOCS_BASE_CONFIG
 
+site_name: Documentação do Prometheus
+site_description: Documentação do Prometheus
+
 ### navigation ###
 
 nav:
   - index.md
+  - introducao/visao-geral.md

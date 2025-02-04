@@ -15,6 +15,7 @@ Você pode apoiar o projeto através do [GitHub Sponsors][sponsor-github] ou
 Copyright (c) 2014 Prometheus Authors.<br>
 Copyright (c) 2025 The Linux Foundation. Todos os direitos reservados.<br>
 A Linux Foundation possui marcas registradas e usa marcas registradas. Para uma lista de marcas registradas da Linux Foundation, consulte a página [Trademark Usage][trademark-usage].<br>
+
 Documentação licenciada sob a [Licença Apache, Versão 2.0][license-apache].<br>
 A obra original foi traduzida do inglês para o português brasileiro.
 

@@ -1,40 +1,62 @@
-# [prometheus-doc-pt-br][portal-link]
+# [prometheus-doc-pt-br][page]
 
-[![README file in English][readme-badge-en]][readme-lang-en]
-[![README file in Brazilian Portuguese][readme-badge-pt-br]][readme-lang-pt-br]
+[![README file in English][badge-readme-en]][readme-en]
+[![README file in Brazilian Portuguese][badge-readme-pt-br]][readme-pt-br]
+[![License: Apache-2.0][badge-license]][license]
+[![Contributors][badge-contributors]][contributors]
+[![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
-Translation of Prometheus Documentation into Brazilian Portuguese.
+Translation of the Prometheus Documentation into Brazilian Portuguese.
+
+## Contributing
+
+We welcome contributions!
+Please read our [Contributing Guidelines][contributing] to learn how you can
+help with translations, reviews, and improvements.
+
+## Code of Conduct
+
+We are committed to providing a welcoming community.
+Please read our [Code of Conduct][code-of-conduct] to understand our community
+standards.
 
 ## Support
 
-You can support the project through [GitHub Sponsors][sponsor-github] or
-[Pix][sponsor-pix].
+You can support the project through [GitHub Sponsors][github-sponsors] or
+[Pix][sponsor].
 
 ## License
 
-Copyright (c) 2014 Prometheus Authors.<br>
-Copyright (c) 2025 The Linux Foundation. All rights reserved.<br>
-The Linux Foundation has registered trademarks and uses trademarks.
-For a list of trademarks of The Linux Foundation, please see the
-[Trademark Usage][trademark-usage] page.<br>
+Copyright (c) 2014-2025 The Prometheus Authors.
 
 Documentation licensed under the
-[Apache License, Version 2.0][license-apache].
+[Creative Commons Attribution 4.0 International License][license].<br>
+The original work was translated from English into Brazilian Portuguese.
 
-[license-apache]: LICENSE
+[badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/prometheus-doc-pt-br
 
-[portal-link]: https://docs.dev.br/pt-br/docs/prometheus/doc/
+[badge-github-sponsors]: https://img.shields.io/github/sponsors/docsdevbr
 
-[readme-badge-en]: https://img.shields.io/badge/lang-en-blue.svg
+[badge-license]: https://img.shields.io/badge/license-CC--BY--4.0-green
 
-[readme-badge-pt-br]: https://img.shields.io/badge/lang-pt--br-dark--green.svg
+[badge-readme-en]: https://img.shields.io/badge/lang-en-blue
 
-[readme-lang-en]: README.EN.md
+[badge-readme-pt-br]: https://img.shields.io/badge/lang-pt--br-blue
 
-[readme-lang-pt-br]: README.md
+[code-of-conduct]: https://github.com/docsdevbr/.github/blob/main/CODE_OF_CONDUCT.EN.md
 
-[sponsor-github]: https://github.com/sponsors/docsdevbr
+[contributing]: https://github.com/docsdevbr/.github/blob/main/CONTRIBUTING.EN.md
 
-[sponsor-pix]: https://docs.dev.br/pt-br/support-us
+[contributors]: https://github.com/docsdevbr/prometheus-doc-pt-br/graphs/contributors
 
-[trademark-usage]: https://www.linuxfoundation.org/trademark-usage
+[github-sponsors]: https://github.com/sponsors/docsdevbr
+
+[license]: https://creativecommons.org/licenses/by/4.0/
+
+[page]: https://docs.dev.br/docs/prometheus/doc/
+
+[readme-en]: README.EN.md
+
+[readme-pt-br]: README.md
+
+[sponsor]: https://docs.dev.br/apoie-o-projeto

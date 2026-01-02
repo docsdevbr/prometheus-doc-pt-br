@@ -2,11 +2,11 @@
 
 [![Arquivo README em inglês][badge-readme-en]][readme-en]
 [![Arquivo README em português brasileiro][badge-readme-pt-br]][readme-pt-br]
-[![Licença: Apache-2.0][badge-license]][license]
+[![Licença: CC-BY-4.0][badge-license]][license]
 [![Pessoas contribuidoras][badge-contributors]][contributors]
 [![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
-Tradução da Documentação do Prometheus para português brasileiro.
+Tradução da documentação do Prometheus para português brasileiro.
 
 ## Contribuindo
 
@@ -22,15 +22,15 @@ comunidade.
 
 ## Apoio
 
-Você pode apoiar o projeto através do [GitHub Sponsors][github-sponsors] ou
-[Pix][sponsor].
+Visite nossa [página para pessoas apoiadoras][sponsor] para saber como você pode
+apoiar o projeto.
 
 ## Licença
 
-Copyright (c) 2014-2025 The Prometheus Authors.
+Copyright (c) 2014-2026 The Prometheus Authors.
 
 Documentação licenciada sob a
-[Licença Creative Commons Atribuição 4.0 Internacional][license].<br>
+[Licença Creative Commons Atribuição 4.0 Internacional][license].<br/>
 A obra original foi traduzida do inglês para o português brasileiro.
 
 [badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/prometheus-doc-pt-br
@@ -53,10 +53,10 @@ A obra original foi traduzida do inglês para o português brasileiro.
 
 [license]: https://creativecommons.org/licenses/by/4.0/deed.pt-br
 
-[page]: https://docs.dev.br/docs/prometheus/doc/
+[page]: https://pt.docs.dev.br/tech/p/prometheus/
 
 [readme-en]: README.EN.md
 
 [readme-pt-br]: README.md
 
-[sponsor]: https://docs.dev.br/apoie-o-projeto
+[sponsor]: https://pt.docs.dev.br/sponsor

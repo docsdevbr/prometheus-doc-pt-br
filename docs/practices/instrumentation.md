@@ -1,6 +1,6 @@
 ---
-# Copyright (c) 2014-2025 The Prometheus Authors.
-
+# Copyright (c) 2014-2026 The Prometheus Authors.
+#
 # Documentation licensed under the Creative Commons Attribution 4.0
 # International License.
 # The original work was translated from English into Brazilian Portuguese.

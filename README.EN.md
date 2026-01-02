@@ -2,11 +2,11 @@
 
 [![README file in English][badge-readme-en]][readme-en]
 [![README file in Brazilian Portuguese][badge-readme-pt-br]][readme-pt-br]
-[![License: Apache-2.0][badge-license]][license]
+[![License: CC-BY-4.0][badge-license]][license]
 [![Contributors][badge-contributors]][contributors]
 [![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
-Translation of the Prometheus Documentation into Brazilian Portuguese.
+Translation of the Prometheus documentation into Brazilian Portuguese.
 
 ## Contributing
 
@@ -20,17 +20,17 @@ We are committed to providing a welcoming community.
 Please read our [Code of Conduct][code-of-conduct] to understand our community
 standards.
 
-## Support
+## Sponsor
 
-You can support the project through [GitHub Sponsors][github-sponsors] or
-[Pix][sponsor].
+Please visit our [sponsor page][sponsor] to know how you can support the
+project.
 
 ## License
 
-Copyright (c) 2014-2025 The Prometheus Authors.
+Copyright (c) 2014-2026 The Prometheus Authors.
 
 Documentation licensed under the
-[Creative Commons Attribution 4.0 International License][license].<br>
+[Creative Commons Attribution 4.0 International License][license].<br/>
 The original work was translated from English into Brazilian Portuguese.
 
 [badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/prometheus-doc-pt-br
@@ -53,10 +53,10 @@ The original work was translated from English into Brazilian Portuguese.
 
 [license]: https://creativecommons.org/licenses/by/4.0/
 
-[page]: https://docs.dev.br/docs/prometheus/doc/
+[page]: https://pt.docs.dev.br/tech/p/prometheus/
 
 [readme-en]: README.EN.md
 
 [readme-pt-br]: README.md
 
-[sponsor]: https://docs.dev.br/apoie-o-projeto
+[sponsor]: https://en.docs.dev.br/sponsor

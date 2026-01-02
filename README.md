@@ -27,7 +27,11 @@ apoiar o projeto.
 
 ## Licença
 
-Copyright (c) 2014-2026 The Prometheus Authors.
+Copyright (c) 2014-2026 The Prometheus Authors.<br/>
+Copyright (c) 2026 The Linux Foundation. Todos os direitos reservados.<br/>
+A Linux Foundation possui marcas registradas e usa marcas registradas.<br/>
+Para uma lista de marcas registradas da Linux Foundation, consulte a página
+[Trademark Usage][trademark-usage].
 
 Documentação licenciada sob a
 [Licença Creative Commons Atribuição 4.0 Internacional][license].<br/>
@@ -60,3 +64,5 @@ A obra original foi traduzida do inglês para o português brasileiro.
 [readme-pt-br]: README.md
 
 [sponsor]: https://pt.docs.dev.br/sponsor
+
+[trademark-usage]: https://www.linuxfoundation.org/trademark-usage

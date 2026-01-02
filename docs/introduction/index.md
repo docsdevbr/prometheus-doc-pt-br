@@ -11,7 +11,11 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Introduction
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/index.md
+revision: 90504ed63803aa17f8a9fab67bde21364f880fc2
+status: ready
+
+title: Introdução
 sort_rank: 1
 nav_icon: hand-finger-right
 ---

@@ -11,24 +11,41 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: First steps with Prometheus
-nav_title: First steps
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/first_steps.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Primeiros passos com o Prometheus
+nav_title: Primeiros passos
 sort_rank: 3
 ---
 
-Welcome to Prometheus! Prometheus is a monitoring platform that collects metrics from monitored targets by scraping metrics HTTP endpoints on these targets. This guide will show you how to install, configure and monitor our first resource with Prometheus. You'll download, install and run Prometheus. You'll also download and install an exporter, tools that expose time series data on hosts and services. Our first exporter will be Prometheus itself, which provides a wide variety of host-level metrics about memory usage, garbage collection, and more.
+Bem-vindo ao Prometheus!
+O Prometheus é uma plataforma de monitoramento que coleta métricas de alvos
+monitorados, extraindo dados de endpoints HTTP desses alvos.
+Este guia mostrará como instalar, configurar e monitorar nosso primeiro recurso
+com o Prometheus.
+Você fará o download, a instalação e a execução do Prometheus.
+Você também fará o download e a instalação de um exportador, uma ferramenta que
+expõe dados de séries temporais em hosts e serviços.
+Nosso primeiro exportador será o próprio Prometheus, que fornece uma ampla
+variedade de métricas em nível de host sobre uso de memória, coleta de lixo e
+muito mais.
 
-## Downloading Prometheus
+## Baixando o Prometheus
 
-[Download the latest release](/download) of Prometheus for your platform, then
-extract it:
+[Baixe a versão mais recente](/download) do Prometheus para sua plataforma e, em
+seguida, extraia-a:
 
 ```language-bash
 tar xvfz prometheus-*.tar.gz
 cd prometheus-*
 ```
 
-The Prometheus server is a single binary called `prometheus` (or `prometheus.exe` on Microsoft Windows). We can run the binary and see help on its options by passing the `--help` flag.
+O servidor Prometheus é um único binário chamado `prometheus` (ou
+`prometheus.exe` no Microsoft Windows).
+Podemos executar o binário e ver a ajuda sobre suas opções passando o parâmetro
+`--help`.
 
 ```language-bash
 ./prometheus --help
@@ -39,13 +56,16 @@ The Prometheus monitoring server
 . . .
 ```
 
-Before starting Prometheus, let's configure it.
+Antes de iniciar o Prometheus, vamos configurá-lo.
 
-## Configuring Prometheus
+## Configurando o Prometheus
 
-Prometheus configuration is [YAML](https://yaml.org/). The Prometheus download comes with a sample configuration in a file called `prometheus.yml` that is a good place to get started.
+A configuração do Prometheus é feita em [YAML](https://yaml.org/).
+O download do Prometheus inclui um arquivo de configuração de exemplo chamado
+`prometheus.yml`, que é um bom ponto de partida.
 
-We've stripped out most of the comments in the example file to make it more succinct (comments are the lines prefixed with a `#`).
+Removemos a maioria dos comentários do arquivo de exemplo para torná-lo mais
+conciso (comentários são as linhas precedidas por um `#`).
 
 ```language-yaml
 global:
@@ -62,80 +82,126 @@ scrape_configs:
       - targets: ['localhost:9090']
 ```
 
-There are three blocks of configuration in the example configuration file: `global`, `rule_files`, and `scrape_configs`.
+Existem três blocos de configuração no arquivo de configuração de exemplo:
+`global`, `rule_files` e `scrape_configs`.
 
-The `global` block controls the Prometheus server's global configuration. We have two options present. The first, `scrape_interval`, controls how often Prometheus will scrape targets. You can override this for individual targets. In this case the global setting is to scrape every 15 seconds. The `evaluation_interval` option controls how often Prometheus will evaluate rules. Prometheus uses rules to create new time series and to generate alerts.
+O bloco `global` controla a configuração global do servidor Prometheus.
+Temos duas opções presentes.
+A primeira, `scrape_interval`, controla a frequência com que o Prometheus coleta
+dados dos alvos.
+Você pode sobrescrever esse valor para alvos individuais.
+Neste caso, a configuração global é coletar dados a cada 15 segundos.
+A opção `evaluation_interval` controla a frequência com que o Prometheus avalia
+as regras.
+O Prometheus usa regras para criar novas séries temporais e gerar alertas.
 
-The `rule_files` block specifies the location of any rules we want the Prometheus server to load. For now we've got no rules.
+O bloco `rule_files` especifica a localização de quaisquer regras que desejamos
+que o servidor Prometheus carregue.
+Por enquanto, não temos regras.
 
-The last block, `scrape_configs`, controls what resources Prometheus monitors. Since Prometheus also exposes data about itself as an HTTP endpoint it can scrape and monitor its own health. In the default configuration there is a single job, called `prometheus`, which scrapes the time series data exposed by the Prometheus server. The job contains a single, statically configured, target, the `localhost` on port `9090`. Prometheus expects metrics to be available on targets on a path of `/metrics`. So this default job is scraping via the URL: http://localhost:9090/metrics.
+O último bloco, `scrape_configs`, controla quais recursos o Prometheus monitora.
+Como o Prometheus também expõe dados sobre si como um endpoint HTTP, ele pode
+coletar dados e monitorar sua própria integridade.
+Na configuração padrão, existe uma única tarefa, chamada `prometheus`, que
+coleta os dados de séries temporais expostos pelo servidor Prometheus.
+A tarefa contém um único alvo configurado estaticamente, o `localhost` na porta
+`9090`.
+O Prometheus espera que as métricas estejam disponíveis em alvos no caminho
+`/metrics`.
+Portanto, esta tarefa padrão coleta dados através da URL:
+http://localhost:9090/metrics.
 
-The time series data returned will detail the state and performance of the Prometheus server.
+Os dados de séries temporais retornados detalharão o estado e o desempenho do
+servidor Prometheus.
 
-For a complete specification of configuration options, see the
-[configuration documentation](/docs/operating/configuration).
+Para uma especificação completa das opções de configuração, consulte a
+[documentação de configuração](/docs/operating/configuration).
 
-## Starting Prometheus
+## Iniciando o Prometheus
 
-To start Prometheus with our newly created configuration file, change to the directory containing the Prometheus binary and run:
+Para iniciar o Prometheus com o arquivo de configuração recém-criado, acesse o
+diretório que contém o binário do Prometheus e execute:
 
 ```language-bash
 ./prometheus --config.file=prometheus.yml
 ```
 
-Prometheus should start up. You should also be able to browse to a status page about itself at http://localhost:9090. Give it about 30 seconds to collect data about itself from its own HTTP metrics endpoint.
+O Prometheus deve iniciar.
+Você também deve conseguir acessar uma página de status sobre ele em
+http://localhost:9090.
+Aguarde cerca de 30 segundos para que ele colete dados sobre si a partir de seu
+próprio endpoint de métricas HTTP.
 
-You can also verify that Prometheus is serving metrics about itself by
-navigating to its own metrics endpoint: http://localhost:9090/metrics.
+Você também pode verificar se o Prometheus está fornecendo métricas sobre si
+acessando seu próprio endpoint de métricas: http://localhost:9090/metrics.
 
-## Using the expression browser
+## Usando o navegador de expressões
 
-Let us try looking at some data that Prometheus has collected about itself. To
-use Prometheus's built-in expression browser, navigate to
-http://localhost:9090/graph and choose the "Table" view within the "Graph"
-tab.
+Vamos analisar alguns dados que o Prometheus coletou sobre si.
+Para usar o navegador de expressões integrado do Prometheus, acesse
+http://localhost:9090/graph e escolha a visualização "Table" na guia "Graph".
 
-As you can gather from http://localhost:9090/metrics, one metric that
-Prometheus exports about itself is called
-`promhttp_metric_handler_requests_total` (the total number of `/metrics` requests the Prometheus server has served). Go ahead and enter this into the expression console:
+Como você pode ver em http://localhost:9090/metrics, uma métrica que o
+Prometheus exporta sobre si é chamada `promhttp_metric_handler_requests_total`
+(o número total de requisições `/metrics` que o servidor Prometheus atendeu).
+Digite o seguinte no console de expressões:
 
 ```
 promhttp_metric_handler_requests_total
 ```
 
-This should return a number of different time series (along with the latest value recorded for each), all with the metric name `promhttp_metric_handler_requests_total`, but with different labels. These labels designate different requests statuses.
+Isso deve retornar várias séries temporais diferentes (juntamente com o último
+valor registrado para cada uma), todas com o nome da métrica
+`promhttp_metric_handler_requests_total`, mas com rótulos diferentes.
+Esses rótulos designam diferentes status de requisição.
 
-If we were only interested in requests that resulted in HTTP code `200`, we could use this query to retrieve that information:
+Se estivéssemos interessados apenas em requisições que resultaram no código HTTP
+`200`, poderíamos usar esta consulta para recuperar essa informação:
 
 ```
 promhttp_metric_handler_requests_total{code="200"}
 ```
 
-To count the number of returned time series, you could write:
+Para contar o número de séries temporais retornadas, você poderia escrever:
 
 ```
 count(promhttp_metric_handler_requests_total)
 ```
 
-For more about the expression language, see the
-[expression language documentation](/docs/querying/basics/).
+Para mais informações sobre a linguagem de expressões, consulte a
+[documentação da linguagem de expressões](/docs/querying/basics/).
 
-## Using the graphing interface
+## Usando a interface de gráficos
 
-To graph expressions, navigate to http://localhost:9090/graph and use the "Graph" tab.
+Para gerar gráficos de expressões, acesse http://localhost:9090/graph e use a
+guia "Graph".
 
-For example, enter the following expression to graph the per-second HTTP request rate returning status code 200 happening in the self-scraped Prometheus:
+Por exemplo, insira a seguinte expressão para gerar um gráfico da taxa de
+requisições HTTP por segundo que retornam o código de status 200 no Prometheus
+coletado automaticamente:
 
 ```
 rate(promhttp_metric_handler_requests_total{code="200"}[1m])
 ```
 
-You can experiment with the graph range parameters and other settings.
+Você pode experimentar com os parâmetros de intervalo do gráfico e outras
+configurações.
 
-## Monitoring other targets
+## Monitorando outros alvos
 
-Collecting metrics from Prometheus alone isn't a great representation of Prometheus' capabilities. To get a better sense of what Prometheus can do, we recommend exploring documentation about other exporters. The [Monitoring Linux or macOS host metrics using a node exporter](/docs/guides/node-exporter) guide is a good place to start.
+Coletar métricas apenas do Prometheus não representa adequadamente as
+capacidades do Prometheus.
+Para ter uma ideia melhor do que o Prometheus pode fazer, recomendamos explorar
+a documentação sobre outros exportadores.
+O guia
+[Monitorando métricas de hosts Linux ou macOS usando um exportador de nós](/docs/guides/node-exporter)
+é um bom ponto de partida.
 
-## Summary
+## Resumo
 
-In this guide, you installed Prometheus, configured a Prometheus instance to monitor resources, and learned some basics of working with time series data in Prometheus' expression browser. To continue learning about Prometheus, check out the [Overview](/docs/introduction/overview) for some ideas about what to explore next.
+Neste guia, você instalou o Prometheus, configurou uma instância do Prometheus
+para monitorar recursos e aprendeu alguns conceitos básicos sobre como trabalhar
+com dados de séries temporais no navegador de expressões do Prometheus.
+Para continuar aprendendo sobre o Prometheus, confira a
+[Visão geral](/docs/introduction/overview) para algumas ideias sobre o que
+explorar a seguir.

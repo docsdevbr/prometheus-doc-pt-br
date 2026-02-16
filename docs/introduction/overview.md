@@ -24,13 +24,13 @@ sort_rank: 1
 ## O que é o Prometheus?
 
 [Prometheus](https://github.com/prometheus) é um conjunto de ferramentas de
-código aberto para monitoramento e alertas de sistemas, originalmente
+código aberto para monitoramento de sistemas e alertas, originalmente
 desenvolvido na [SoundCloud](http://soundcloud.com).
 Desde sua criação em 2012, muitas empresas e organizações adotaram o Prometheus,
 e o projeto possui uma [comunidade](/community/) de pessoas desenvolvedoras e
 usuárias muito ativa.
-Atualmente, é um projeto de código aberto independente e mantido
-sem vínculo com qualquer empresa.
+Atualmente, é um projeto de código aberto independente e mantido sem vínculo com
+qualquer empresa.
 Para enfatizar isso e esclarecer a estrutura de governança do projeto, o
 Prometheus se juntou à [Cloud Native Computing Foundation](https://cncf.io/) em
 2016 como o segundo projeto hospedado, depois do
@@ -48,18 +48,18 @@ listados na seção [Mídias](/introduction/media.md).
 
 Os principais recursos do Prometheus são:
 
-* um [modelo de dados](/concepts/data_model.md) multidimensional com dados de
-  séries temporais identificados por nome de métrica e pares de chave/valor;
-* PromQL, uma [linguagem de consulta flexível](/prometheus/querying/basics.md)
-  para aproveitar essa dimensionalidade;
-* nenhuma dependência em armazenamento distribuído; nós de servidor único são
-  autônomos;
-* a coleta de séries temporais acontece por meio de um modelo pull via HTTP;
-* o [envio de séries temporais](/instrumenting/pushing.md) é suportado por meio
-  de um gateway intermediário;
-* os alvos são descobertos por meio da descoberta de serviço ou por configuração
-  estática;
-* vários modos de suporte de gráficos e painéis.
+- Um [modelo de dados](/concepts/data_model.md) multidimensional com dados de
+  séries temporais identificados por nome de métrica e pares de chave/valor.
+- PromQL, uma [linguagem de consulta flexível](/prometheus/querying/basics.md)
+  para aproveitar essa dimensionalidade.
+- Nenhuma dependência em armazenamento distribuído; nós de servidor único são
+  autônomos.
+- A coleta de séries temporais acontece por meio de um modelo pull via HTTP.
+- O [envio de séries temporais](/instrumenting/pushing.md) é suportado por meio
+  de um gateway intermediário.
+- Os alvos são descobertos por meio da descoberta de serviço ou por configuração
+  estática.
+- Vários modos de suporte a gráficos e dashboards.
 
 ### O que são métricas?
 
@@ -86,17 +86,17 @@ aumentar o número de servidores para lidar com a carga.
 O ecossistema Prometheus consiste em diversos componentes, muitos dos quais são
 opcionais:
 
-* o [servidor Prometheus](https://github.com/prometheus/prometheus) principal
-  que coleta e armazena dados de séries temporais;
-* [bibliotecas de cliente](/instrumenting/clientlibs.md) para instrumentar o
-  código da aplicação;
-* um [gateway de push](https://github.com/prometheus/pushgateway) para suportar
-  tarefas de curta duração;
-* [exportadores](/instrumenting/exporters.md) de propósito específico para
-  serviços como HAProxy, StatsD, Graphite, etc.;
-* um [gerenciador de alertas](https://github.com/prometheus/alertmanager) para
-  lidar com alertas;
-* diversas ferramentas de suporte.
+- O [servidor Prometheus](https://github.com/prometheus/prometheus) principal
+  que coleta e armazena dados de séries temporais.
+- [Bibliotecas de cliente](/instrumenting/clientlibs.md) para instrumentar o
+  código da aplicação.
+- Um [gateway de push](https://github.com/prometheus/pushgateway) para suportar
+  tarefas de curta duração.
+- [Exportadores](/instrumenting/exporters.md) de propósito especial para
+  serviços como HAProxy, StatsD, Graphite, etc.
+- Um [gerenciador de alertas](https://github.com/prometheus/alertmanager) para
+  lidar com alertas.
+- Diversas ferramentas de suporte.
 
 A maioria dos componentes do Prometheus são escritos em
 [Go](https://golang.org/), tornando-os fáceis de construir e implementar como
@@ -131,7 +131,7 @@ recorre durante uma queda de serviço, permitindo diagnosticar problemas
 rapidamente.
 Cada servidor Prometheus é independente, não dependendo de armazenamento em rede
 ou outros serviços remotos.
-Você pode confiar nele quando outras partes da sua infraestrutura estiverem
+Você pode confiar nele quando outras partes da sua infraestrutura estiverem com
 problemas, e não precisa configurar uma infraestrutura extensa para usá-lo.
 
 ## Quando ele não é adequado?

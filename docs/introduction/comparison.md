@@ -11,7 +11,7 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/first_steps.md
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/comparison.md
 revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
 status: ready
 

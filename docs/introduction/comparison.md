@@ -11,48 +11,57 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Comparison to alternatives
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/first_steps.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Comparação com alternativas
 sort_rank: 4
 ---
 
 ## Prometheus vs. Graphite
 
-### Scope
+### Escopo
 
-[Graphite](http://graphite.readthedocs.org/en/latest/) focuses on being a
-passive time series database with a query language and graphing features. Any
-other concerns are addressed by external components.
+[Graphite](http://graphite.readthedocs.org/en/latest/) concentra-se em ser um
+banco de dados passivo de séries temporais com uma linguagem de consulta e
+recursos de geração de gráficos.
+Quaisquer outras preocupações são tratadas por componentes externos.
 
-Prometheus is a full monitoring and trending system that includes built-in and
-active scraping, storing, querying, graphing, and alerting based on time series
-data. It has knowledge about what the world should look like (which endpoints
-should exist, what time series patterns mean trouble, etc.), and actively tries
-to find faults.
+O Prometheus é um sistema completo de monitoramento e análise de tendências que
+inclui coleta, armazenamento, consulta, geração de gráficos e alertas integrados
+e ativos com base em dados de séries temporais.
+Ele tem conhecimento sobre como o mundo deveria ser (quais endpoints deveriam
+existir, quais padrões de séries temporais indicam problemas, etc.) e tenta
+ativamente encontrar falhas.
 
-### Data model
+### Modelo de dados
 
-Graphite stores numeric samples for named time series, much like Prometheus
-does. However, Prometheus's metadata model is richer: while Graphite metric
-names consist of dot-separated components which implicitly encode dimensions,
-Prometheus encodes dimensions explicitly as key-value pairs, called labels, attached
-to a metric name. This allows easy filtering, grouping, and matching by these
-labels via the query language.
+O Graphite armazena amostras numéricas para séries temporais nomeadas, de forma
+muito semelhante ao Prometheus.
+No entanto, o modelo de metadados do Prometheus é mais rico: enquanto os nomes
+das métricas do Graphite consistem em componentes separados por pontos que
+codificam implicitamente as dimensões, o Prometheus codifica as dimensões
+explicitamente como pares chave-valor, chamados rótulos, anexados a um nome de
+métrica.
+Isso permite filtrar, agrupar e corresponder facilmente por esses rótulos por
+meio da linguagem de consulta.
 
-Further, especially when Graphite is used in combination with
-[StatsD](https://github.com/etsy/statsd/), it is common to store only
-aggregated data over all monitored instances, rather than preserving the
-instance as a dimension and being able to drill down into individual
-problematic instances.
+Além disso, especialmente quando o Graphite é usado em combinação com o
+[StatsD](https://github.com/etsy/statsd/), é comum armazenar apenas dados
+agregados de todas as instâncias monitoradas, em vez de preservar a instância
+como uma dimensão e poder detalhar instâncias problemáticas individuais.
 
-For example, storing the number of HTTP requests to API servers with the
-response code `500` and the method `POST` to the `/tracks` endpoint would
-commonly be encoded like this in Graphite/StatsD:
+Por exemplo, armazenar o número de requisições HTTP para servidores de API com o
+código de resposta `500` e o método `POST` para o endpoint `/tracks` seria
+normalmente codificado assim em Graphite/StatsD:
 
 ```
 stats.api-server.tracks.post.500 -> 93
 ```
 
-In Prometheus the same data could be encoded like this (assuming three api-server instances):
+No Prometheus, os mesmos dados poderiam ser codificados desta forma
+(considerando três instâncias do servidor de API):
 
 ```
 api_server_http_requests_total{method="POST",handler="/tracks",status="500",instance="<sample1>"} -> 34
@@ -60,234 +69,318 @@ api_server_http_requests_total{method="POST",handler="/tracks",status="500",inst
 api_server_http_requests_total{method="POST",handler="/tracks",status="500",instance="<sample3>"} -> 31
 ```
 
-### Storage
+### Armazenamento
 
-Graphite stores time series data on local disk in the
-[Whisper](http://graphite.readthedocs.org/en/latest/whisper.html) format, an
-RRD-style database that expects samples to arrive at regular intervals. Every
-time series is stored in a separate file, and new samples overwrite old ones
-after a certain amount of time.
+O Graphite armazena dados de séries temporais em disco local no formato
+[Whisper](http://graphite.readthedocs.org/en/latest/whisper.html), um banco de
+dados no estilo RRD que espera que as amostras cheguem em intervalos regulares.
+Cada série temporal é armazenada em um arquivo separado e novas amostras
+sobrescrevem as antigas após um determinado período.
 
-Prometheus also creates one local file per time series, but allows storing
-samples at arbitrary intervals as scrapes or rule evaluations occur. Since new
-samples are simply appended, old data may be kept arbitrarily long. Prometheus
-also works well for many short-lived, frequently changing sets of time series.
+O Prometheus também cria um arquivo local por série temporal, mas permite
+armazenar amostras em intervalos arbitrários à medida que coletas ou avaliações
+de regras ocorrem.
+Como novas amostras são simplesmente anexadas, os dados antigos podem ser
+mantidos por tempo indeterminado.
+O Prometheus também funciona bem para muitos conjuntos de séries temporais de
+curta duração que mudam com frequência.
 
-### Summary
+### Resumo
 
-Prometheus offers a richer data model and query language, in addition to being
-easier to run and integrate into your environment. If you want a clustered
-solution that can hold historical data long term, Graphite may be a better
-choice.
-
+O Prometheus oferece um modelo de dados e uma linguagem de consulta mais ricos,
+além de ser mais fácil de executar e integrar ao seu ambiente.
+Se você deseja uma solução em cluster que possa armazenar dados históricos a
+longo prazo, o Graphite pode ser uma escolha melhor.
 
 ## Prometheus vs. InfluxDB
 
-[InfluxDB](https://influxdata.com/) is an open-source time series database,
-with a commercial option for scaling and clustering. The InfluxDB project was
-released almost a year after Prometheus development began, so we were unable to
-consider it as an alternative at the time. Still, there are significant
-differences between Prometheus and InfluxDB, and both systems are geared
-towards slightly different use cases.
+O InfluxDB (https://influxdata.com/) é um banco de dados de séries temporais de
+código aberto, com uma opção comercial para escalonamento e clustering.
+O projeto InfluxDB foi lançado quase um ano após o início do desenvolvimento do
+Prometheus, portanto, não pudemos considerá-lo como uma alternativa na época.
+Ainda assim, existem diferenças significativas entre o Prometheus e o InfluxDB,
+e ambos os sistemas são voltados para casos de uso ligeiramente diferentes.
 
-### Scope
+### Escopo
 
-For a fair comparison, we must also consider
-[Kapacitor](https://github.com/influxdata/kapacitor) together with InfluxDB, as
-in combination they address the same problem space as Prometheus and the
+Para uma comparação justa, também devemos considerar o
+Kapacitor (https://github.com/influxdata/kapacitor) juntamente com o InfluxDB,
+pois em conjunto, eles abordam o mesmo espaço de problemas que o Prometheus e o
 Alertmanager.
 
-The same scope differences as in the case of
-[Graphite](#prometheus-vs-graphite) apply here for InfluxDB itself. In addition
-InfluxDB offers continuous queries, which are equivalent to Prometheus
-recording rules.
+As mesmas diferenças de escopo do caso do [Graphite](#prometheus-vs-graphite) se
+aplicam aqui ao próprio InfluxDB.
+Além disso, o InfluxDB oferece consultas contínuas, que são equivalentes às
+regras de gravação do Prometheus.
 
-Kapacitor’s scope is a combination of Prometheus recording rules, alerting
-rules, and the Alertmanager's notification functionality. Prometheus offers [a
-more powerful query language for graphing and
-alerting](https://www.robustperception.io/translating-between-monitoring-languages/).
-The Prometheus Alertmanager additionally offers grouping, deduplication and
-silencing functionality.
+O escopo do Kapacitor é uma combinação das regras de gravação do Prometheus,
+regras de alerta e a funcionalidade de notificação do Alertmanager.
+O Prometheus oferece
+[uma linguagem de consulta mais poderosa para geração de gráficos e alertas](https://www.robustperception.io/translating-between-monitoring-languages/).
+O Alertmanager do Prometheus oferece ainda funcionalidades de agrupamento,
+desduplicação e silenciamento.
 
-### Data model / storage
+### Modelo de dados / armazenamento
 
-Like Prometheus, the InfluxDB data model has key-value pairs as labels, which
-are called tags. In addition, InfluxDB has a second level of labels called
-fields, which are more limited in use. InfluxDB supports timestamps with up to
-nanosecond resolution, and float64, int64, bool, and string data types.
-Prometheus, by contrast, supports the float64 data type with limited support for
-strings, and millisecond resolution timestamps.
+Assim como o Prometheus, o modelo de dados do InfluxDB possui pares de
+chave-valor como rótulos, chamados de tags.
+Além disso, o InfluxDB possui um segundo nível de rótulos chamados campos, cujo
+uso é mais limitado.
+O InfluxDB suporta timestamps com resolução de até nanossegundos e tipos de
+dados float64, int64, bool e string.
+Em contraste, o Prometheus suporta o tipo de dados float64 com suporte limitado
+para strings e timestamps com resolução de milissegundos.
 
-InfluxDB uses a variant of a [log-structured merge tree for storage with a write ahead log](https://docs.influxdata.com/influxdb/v1.7/concepts/storage_engine/),
-sharded by time. This is much more suitable to event logging than Prometheus's
-append-only file per time series approach.
+O InfluxDB usa uma variante de uma
+[árvore de mesclagem estruturada em log para armazenamento com um log de gravação antecipada](https://docs.influxdata.com/influxdb/v1.7/concepts/storage_engine/),
+fragmentada por tempo.
+Isso é muito mais adequado para registro de eventos do que a abordagem do
+Prometheus de arquivo somente de acréscimo por série temporal.
 
+O artigo
 [Logs and Metrics and Graphs, Oh My!](https://grafana.com/blog/2016/01/05/logs-and-metrics-and-graphs-oh-my/)
-describes the differences between event logging and metrics recording.
+descreve as diferenças entre o registro de eventos e o registro de métricas.
 
-### Architecture
+### Arquitetura
 
-Prometheus servers run independently of each other and only rely on their local
-storage for their core functionality: scraping, rule processing, and alerting.
-The open source version of InfluxDB is similar.
+Os servidores Prometheus são executados independentemente uns dos outros e
+dependem apenas de seu armazenamento local para suas funcionalidades principais:
+coleta de dados, processamento de regras e alertas.
+A versão de código aberto do InfluxDB é semelhante.
 
-The commercial InfluxDB offering is, by design, a distributed storage cluster
-with storage and queries being handled by many nodes at once.
+A oferta comercial do InfluxDB é, por definição, um cluster de armazenamento
+distribuído, com armazenamento e consultas sendo gerenciados por vários nós
+simultaneamente.
 
-This means that the commercial InfluxDB will be easier to scale horizontally,
-but it also means that you have to manage the complexity of a distributed
-storage system from the beginning. Prometheus will be simpler to run, but at
-some point you will need to shard servers explicitly along scalability
-boundaries like products, services, datacenters, or similar aspects.
-Independent servers (which can be run redundantly in parallel) may also give
-you better reliability and failure isolation.
+Isso significa que o InfluxDB comercial será mais fácil de escalar
+horizontalmente, mas também significa que você terá que gerenciar a complexidade
+de um sistema de armazenamento distribuído desde o início.
+O Prometheus será mais simples de executar, mas em algum momento você precisará
+fragmentar os servidores explicitamente de acordo com limites de escalabilidade,
+como produtos, serviços, data centers ou aspectos semelhantes.
+Servidores independentes (que podem ser executados de forma redundante em
+paralelo) também podem oferecer melhor confiabilidade e isolamento de falhas.
 
-Kapacitor's open-source release has no built-in distributed/redundant options for
-rules,  alerting, or notifications.  The open-source release of Kapacitor can
-be scaled via manual sharding by the user, similar to Prometheus itself.
-Influx offers [Enterprise Kapacitor](https://docs.influxdata.com/enterprise_kapacitor), which supports an
-HA/redundant alerting system.
+A versão de código aberto do Kapacitor não possui opções
+distribuídas/redundantes integradas para regras, alertas ou notificações.
+A versão de código aberto do Kapacitor pode ser escalada por meio de
+fragmentação manual pela pessoa usuária, semelhante ao próprio Prometheus.
+O InfluxDB oferece o
+[Enterprise Kapacitor](https://docs.influxdata.com/enterprise_kapacitor), que
+suporta um sistema de alertas de alta disponibilidade/redundante.
 
-Prometheus and the Alertmanager by contrast offer a fully open-source redundant
-option via running redundant replicas of Prometheus and using the Alertmanager's
-[High Availability](https://github.com/prometheus/alertmanager#high-availability)
-mode.
+Por outro lado, o Prometheus e o Alertmanager oferecem uma opção redundante
+totalmente de código aberto, executando réplicas redundantes do Prometheus e
+usando o modo de
+[Alta Disponibilidade](https://github.com/prometheus/alertmanager#high-availability)
+do Alertmanager.
 
-### Summary
+### Resumo
 
-There are many similarities between the systems. Both have labels (called tags
-in InfluxDB) to efficiently support multi-dimensional metrics. Both use
-basically the same data compression algorithms. Both have extensive
-integrations, including with each other. Both have hooks allowing you to extend
-them further, such as analyzing data in statistical tools or performing
-automated actions.
+Existem muitas semelhanças entre os sistemas.
+Ambos possuem rótulos (chamados tags no InfluxDB) para suportar métricas
+multidimensionais de forma eficiente.
+Ambos usam basicamente os mesmos algoritmos de compressão de dados.
+Ambos possuem extensas integrações, inclusive entre si.
+Ambos possuem recursos que permitem estendê-los ainda mais, como analisar dados
+em ferramentas estatísticas ou executar ações automatizadas.
 
-Where InfluxDB is better:
+Onde o InfluxDB é melhor:
 
-  * If you're doing event logging.
-  * Commercial option offers clustering for InfluxDB, which is also better for long term data storage.
-  * Eventually consistent view of data between replicas.
+- Se você estiver fazendo registro de eventos.
+- A opção comercial oferece clustering para o InfluxDB, que também é melhor para
+  armazenamento de dados a longo prazo.
+- Visão eventualmente consistente dos dados entre as réplicas.
 
-Where Prometheus is better:
+Onde o Prometheus é melhor:
 
-  * If you're primarily doing metrics.
-  * More powerful query language, alerting, and notification functionality.
-  * Higher availability and uptime for graphing and alerting.
+- Se você trabalha principalmente com métricas.
+- Linguagem de consulta, alertas e funcionalidades de notificação mais
+  poderosas.
+- Maior disponibilidade e tempo de atividade para geração de gráficos e alertas.
 
-InfluxDB is maintained by a single commercial company following the open-core
-model, offering premium features like closed-source clustering, hosting and
-support. Prometheus is a [fully open source and independent project](/community/), maintained
-by a number of companies and individuals, some of whom also offer commercial services and support.
+O InfluxDB é mantido por uma única empresa comercial seguindo o modelo
+open-core, oferecendo recursos premium como clustering, hospedagem e suporte de
+código fechado.
+O Prometheus é um [projeto totalmente open source e independente](/community/),
+mantido por diversas empresas e pessoas, algumas das quais também oferecem
+serviços e suporte comerciais.
 
 ## Prometheus vs. OpenTSDB
 
-[OpenTSDB](http://opentsdb.net/) is a distributed time series database based on
-[Hadoop](http://hadoop.apache.org/) and [HBase](http://hbase.apache.org/).
+O OpenTSDB (http://opentsdb.net/) é um banco de dados distribuído de séries
+temporais baseado em Hadoop (http://hadoop.apache.org/) e HBase
+(http://hbase.apache.org/).
 
-### Scope
+### Escopo
 
-The same scope differences as in the case of
-[Graphite](/docs/introduction/comparison/#prometheus-vs-graphite) apply here.
+As mesmas diferenças de escopo do Graphite
+(http://docs/introduction/comparison/#prometheus-vs-graphite) se aplicam aqui.
 
-### Data model
+### Modelo de dados
 
-OpenTSDB's data model is almost identical to Prometheus's: time series are
-identified by a set of arbitrary key-value pairs (OpenTSDB tags are
-Prometheus labels). All data for a metric is
-[stored together](http://opentsdb.net/docs/build/html/user_guide/writing/index.html#time-series-cardinality),
-limiting the cardinality of metrics. There are minor differences though: Prometheus
-allows arbitrary characters in label values, while OpenTSDB is more restrictive.
-OpenTSDB also lacks a full query language, only allowing simple aggregation and math via its API.
+O modelo de dados do OpenTSDB é quase idêntico ao do Prometheus: as séries
+temporais são identificadas por um conjunto de pares chave-valor arbitrários (as
+tags do OpenTSDB são rótulos do Prometheus).
+Todos os dados de uma métrica são
+[armazenados juntos](http://opentsdb.net/docs/build/html/user_guide/writing/index.html#time-series-cardinality),
+limitando a cardinalidade das métricas.
+Existem algumas diferenças menores: o Prometheus permite caracteres arbitrários
+em valores de rótulos, enquanto o OpenTSDB é mais restritivo.
+O OpenTSDB também não possui uma linguagem de consulta completa, permitindo
+apenas agregações e operações matemáticas simples por meio de sua API.
 
-### Storage
+### Armazenamento
 
-[OpenTSDB](http://opentsdb.net/)'s storage is implemented on top of
-[Hadoop](http://hadoop.apache.org/) and [HBase](http://hbase.apache.org/). This
-means that it is easy to scale OpenTSDB horizontally, but you have to accept
-the overall complexity of running a Hadoop/HBase cluster from the beginning.
+O armazenamento do [OpenTSDB](http://opentsdb.net/) é implementado sobre o
+[Hadoop](http://hadoop.apache.org/) e o [HBase](http://hbase.apache.org/).
+Isso significa que é fácil escalar o OpenTSDB horizontalmente, mas você precisa
+aceitar a complexidade geral de executar um cluster Hadoop/HBase desde o início.
 
-Prometheus will be simpler to run initially, but will require explicit sharding
-once the capacity of a single node is exceeded.
+O Prometheus será mais simples de executar inicialmente, mas exigirá
+particionamento explícito quando a capacidade de um único nó for excedida.
 
-### Summary
+### Resumo
 
-Prometheus offers a much richer query language, can handle higher cardinality
-metrics, and forms part of a complete monitoring system. If you're already
-running Hadoop and value long term storage over these benefits, OpenTSDB is a
-good choice.
+O Prometheus oferece uma linguagem de consulta muito mais rica, pode lidar com
+métricas de cardinalidade mais alta e faz parte de um sistema de monitoramento
+completo.
+Se você já utiliza o Hadoop e prioriza o armazenamento de longo prazo em
+detrimento desses benefícios, o OpenTSDB é uma boa escolha.
 
 ## Prometheus vs. Nagios
 
-[Nagios](https://www.nagios.org/) is a monitoring system that originated in the
-1990s as NetSaint.
+O [Nagios](https://www.nagios.org/) é um sistema de monitoramento que surgiu na
+década de 1990 como NetSaint.
 
-### Scope
+### Escopo
 
-Nagios is primarily about alerting based on the exit codes of scripts. These are
-called “checks”. There is silencing of individual alerts, however no grouping,
-routing or deduplication.
+O Nagios se concentra principalmente em alertas baseados nos códigos de saída de
+scripts.
+Esses códigos são chamados de "verificações".
+É possível silenciar alertas individuais, mas não há agrupamento, roteamento ou
+deduplicação.
 
-There are a variety of plugins. For example, piping the few kilobytes of
-perfData plugins are allowed to return [to a time series database such as Graphite](https://github.com/shawn-sterling/graphios) or using NRPE to [run checks on remote machines](https://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details).
+Existem diversos plugins disponíveis.
+Por exemplo, é possível redirecionar os poucos kilobytes dos plugins perfData
+[para um banco de dados de séries temporais, como o Graphite](https://github.com/shawn-sterling/graphios),
+ou usar o NRPE para
+[executar verificações em máquinas remotas](https://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details).
 
-### Data model
+### Modelo de dados
 
-Nagios is host-based. Each host can have one or more services and each service
-can perform one check.
+O Nagios é baseado em hosts.
+Cada host pode ter um ou mais serviços e cada serviço pode executar uma
+verificação.
 
-There is no notion of labels or a query language.
+Não há noção de rótulos ou linguagem de consulta.
 
-### Storage
+### Armazenamento
 
-Nagios has no storage per-se, beyond the current check state.
-There are plugins which can store data such as [for visualisation](https://docs.pnp4nagios.org/).
+O Nagios não possui armazenamento próprio, além do estado atual da verificação.
+Existem plugins que podem armazenar dados, como
+[para visualização](https://docs.pnp4nagios.org/).
 
-### Architecture
+### Arquitetura
 
-Nagios servers are standalone. All configuration of checks is via file.
+Os servidores Nagios são independentes.
+Toda a configuração das verificações é feita por meio de arquivo.
 
-### Summary
+### Resumo
 
-Nagios is suitable for basic monitoring of small and/or static systems where
-blackbox probing is sufficient.
+O Nagios é adequado para monitoramento básico de sistemas pequenos e/ou
+estáticos onde a sondagem de caixa preta é suficiente.
 
-If you want to do whitebox monitoring, or have a dynamic or cloud based
-environment, then Prometheus is a good choice.
+Se você deseja realizar monitoramento de caixa branca ou possui um ambiente
+dinâmico ou baseado em nuvem, o Prometheus é uma boa opção.
 
 ## Prometheus vs. Sensu
 
-[Sensu](https://sensu.io) is an open source monitoring and observability pipeline with a commercial distribution which offers additional features for scalability. It can reuse existing Nagios plugins.
+O [Sensu](https://sensu.io) é um pipeline de monitoramento e observabilidade de
+código aberto com uma distribuição comercial que oferece recursos adicionais
+para escalabilidade.
+Ele pode reutilizar plugins existentes do Nagios.
 
-### Scope
+### Escopo
 
-Sensu is an observability pipeline that focuses on processing and alerting of observability data as a stream of [Events](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/). It provides an extensible framework for event [filtering](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-filter/), aggregation, [transformation](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-transform/), and [processing](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-process/) – including sending alerts to other systems and storing events in third-party systems. Sensu's event processing capabilities are similar in scope to Prometheus alerting rules and Alertmanager.
+O Sensu é um pipeline de observabilidade que se concentra no processamento e
+alerta de dados de observabilidade como um fluxo de
+[eventos](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/).
+Ele fornece uma estrutura extensível para
+[filtragem](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-filter/),
+agregação,
+[transformação](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-transform/)
+e
+[processamento](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-process/)
+de eventos – incluindo o envio de alertas para outros sistemas e o armazenamento
+de eventos em sistemas de terceiros.
+Os recursos de processamento de eventos do Sensu são semelhantes em escopo às
+regras de alerta do Prometheus e ao Alertmanager.
 
-### Data model
+### Modelo de dados
 
-Sensu [Events](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/) represent service health and/or [metrics](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#metric-attributes) in a structured data format identified by an [entity](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-entities/entities/) name (e.g. server, cloud compute instance, container, or service), an event name, and optional [key-value metadata](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#metadata-attributes) called "labels" or "annotations". The Sensu Event payload may include one or more metric [`points`](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#points-attributes), represented as a JSON object containing a `name`, `tags` (key/value pairs), `timestamp`, and `value` (always a float).
+Os
+[eventos](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/)
+do Sensu representam a saúde do serviço e/ou
+[métricas](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#metric-attributes)
+em um formato de dados estruturado, identificado por um nome de
+[entidade](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-entities/entities/)
+(por exemplo, servidor, instância de computação em nuvem, contêiner ou serviço),
+um nome de evento e
+[metadados](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#metadata-attributes)
+opcionais, chamados de "rótulos" ou "anotações".
+A carga útil de eventos do Sensu pode incluir uma ou mais
+[`points`](https://docs.sensu.io/sensu-go/latest/observability-pipeline/observe-events/events/#points-attributes)
+de métricas, representados como um objeto JSON contendo um `name`, `tags` (pares
+chave/valor), `timestamp` e `value` (sempre um número de ponto flutuante).
 
-### Storage
+### Armazenamento
 
-Sensu stores current and recent event status information and real-time inventory data in an embedded database (etcd) or an external RDBMS (PostgreSQL).
+O Sensu armazena informações sobre o status de eventos atuais e recentes, bem
+como dados de inventário em tempo real, em um banco de dados embutido (etcd) ou
+em um SGBD relacional externo (PostgreSQL).
 
-### Architecture
+### Arquitetura
 
-All components of a Sensu deployment can be clustered for high availability and improved event-processing throughput.
+Todos os componentes de uma implementação do Sensu podem ser agrupados em
+clusters para alta disponibilidade e melhoria na taxa de transferência de
+processamento de eventos.
 
-### Summary
+### Resumo
 
-Sensu and Prometheus have a few capabilities in common, but they take very different approaches to monitoring. Both offer extensible discovery mechanisms for dynamic cloud-based environments and ephemeral compute platforms, though the underlying mechanisms are quite different. Both provide support for collecting multi-dimensional metrics via labels and annotations. Both have extensive integrations, and Sensu natively supports collecting metrics from all Prometheus exporters. Both are capable of forwarding observability data to third-party data platforms (e.g. event stores or TSDBs). Where Sensu and Prometheus differ the most is in their use cases.
+O Sensu e o Prometheus têm algumas funcionalidades em comum, mas adotam
+abordagens muito diferentes para o monitoramento.
+Ambos oferecem mecanismos de descoberta extensíveis para ambientes dinâmicos
+baseados em nuvem e plataformas de computação efêmeras, embora os mecanismos
+subjacentes sejam bastante distintos.
+Ambos oferecem suporte à coleta de métricas multidimensionais por meio de
+rótulos e anotações.
+Ambos possuem amplas integrações, e o Sensu oferece suporte nativo à coleta de
+métricas de todos os exportadores do Prometheus.
+Ambos são capazes de encaminhar dados de observabilidade para plataformas de
+dados de terceiros (por exemplo, repositórios de eventos ou TSDBs).
+A principal diferença entre Sensu e Prometheus reside em seus casos de uso.
 
-Where Sensu is better:
+Onde o Sensu se destaca:
 
-- If you're collecting and processing hybrid observability data (including metrics _and/or_ events)
-- If you're consolidating multiple monitoring tools and need support for metrics _and_ Nagios-style plugins or check scripts
-- More powerful event-processing platform
+- Se você estiver coletando e processando dados de observabilidade híbrida
+  (incluindo métricas _e/ou_ eventos).
+- Se você estiver consolidando várias ferramentas de monitoramento e precisar de
+  suporte para métricas _e_ plugins no estilo Nagios ou scripts de verificação.
+- Plataforma de processamento de eventos mais poderosa.
 
-Where Prometheus is better:
+Onde o Prometheus se destaca:
 
-- If you're primarily collecting and evaluating metrics
-- If you're monitoring homogeneous Kubernetes infrastructure (if 100% of the workloads you're monitoring are in K8s, Prometheus offers better K8s integration)
-- More powerful query language, and built-in support for historical data analysis
+- Se você estiver coletando e avaliando principalmente métricas.
+- Se você estiver monitorando infraestrutura Kubernetes homogênea (se 100% das
+  cargas de trabalho que você está monitorando estiverem em K8s, o Prometheus
+  oferece melhor integração com K8s).
+- Linguagem de consulta mais poderosa e suporte integrado para análise de dados
+  históricos.
 
-Sensu is maintained by a single commercial company following the open-core business model, offering premium features like closed-source event correlation and aggregation, federation, and support. Prometheus is a fully open source and independent project, maintained by a number of companies and individuals, some of whom also offer commercial services and support.
+O Sensu é mantido por uma única empresa comercial que segue o modelo de negócios
+open-core, oferecendo recursos premium como correlação e agregação de eventos de
+código fechado, federação e suporte.
+O Prometheus é um projeto totalmente open source e independente, mantido por
+diversas empresas e pessoas, algumas das quais também oferecem serviços e
+suporte comerciais.

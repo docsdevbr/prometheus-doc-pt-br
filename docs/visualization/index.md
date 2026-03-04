@@ -11,7 +11,11 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Visualization
+source_url: https://github.com/prometheus/docs/blob/main/docs/visualization/index.md
+revision: 90504ed63803aa17f8a9fab67bde21364f880fc2
+status: ready
+
+title: Visualização
 sort_rank: 4
 nav_icon: chart-line
 ---

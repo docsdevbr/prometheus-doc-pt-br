@@ -11,12 +11,18 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Expression browser
+source_url: https://github.com/prometheus/docs/blob/main/docs/visualization/browser.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Navegador de expressões
 sort_rank: 1
 ---
 
-The expression browser is available at `/graph` on the Prometheus server, allowing you
-to enter any expression and see its result either in a table or graphed over time.
+O navegador de expressões está disponível em `/graph` no servidor Prometheus,
+permitindo que você insira qualquer expressão e veja seu resultado em uma tabela
+ou em um gráfico ao longo do tempo.
 
-This is primarily useful for ad-hoc queries and debugging. For graphs, use
-[Grafana](/docs/visualization/grafana/) or [Console templates](/docs/visualization/consoles/).
+Isso é útil principalmente para consultas ad-hoc e depuração.
+Para gráficos, use o [Grafana](/docs/visualization/grafana/) ou
+[templates de console](/docs/visualization/consoles/).

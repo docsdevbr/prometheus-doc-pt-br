@@ -57,12 +57,12 @@ A obra original foi traduzida do inglês para o português brasileiro.
 
 [license]: https://creativecommons.org/licenses/by/4.0/deed.pt-br
 
-[page]: https://pt.docs.dev.br/tech/p/prometheus/
+[page]: https://pt.docs.dev.br/tech/p/prometheus/index.html
 
 [readme-en]: README.EN.md
 
 [readme-pt-br]: README.md
 
-[sponsor]: https://pt.docs.dev.br/sponsor
+[sponsor]: https://pt.docs.dev.br/sponsor.html
 
 [trademark-usage]: https://www.linuxfoundation.org/trademark-usage

@@ -57,12 +57,12 @@ The original work was translated from English into Brazilian Portuguese.
 
 [license]: https://creativecommons.org/licenses/by/4.0/
 
-[page]: https://pt.docs.dev.br/tech/p/prometheus/
+[page]: https://pt.docs.dev.br/tech/p/prometheus/index.html
 
 [readme-en]: README.EN.md
 
 [readme-pt-br]: README.md
 
-[sponsor]: https://en.docs.dev.br/sponsor
+[sponsor]: https://en.docs.dev.br/sponsor.html
 
 [trademark-usage]: https://www.linuxfoundation.org/trademark-usage

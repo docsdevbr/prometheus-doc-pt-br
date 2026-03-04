@@ -11,78 +11,98 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Grafana support for Prometheus
+source_url: https://github.com/prometheus/docs/blob/main/docs/visualization/grafana.md
+revision: fb6b195a8f00929cf066b27629cbd5bc3012d90d
+status: ready
+
+title: Suporte do Grafana para Prometheus
 nav_title: Grafana
 sort_rank: 2
 ---
 
-[Grafana](http://grafana.com/) is an open-source analytics and visualization platform used to monitor and analyze metrics from various data
-sources. It allows users to create, explore, and share interactive dashboards, supporting integrations with databases
-like Prometheus, InfluxDB, Elasticsearch, and more. Grafana is widely used for observability, providing alerting, plugin
-extensibility, and a flexible query editor for real-time data visualization.
+O Grafana (http://grafana.com/) é uma plataforma de análise e visualização de
+código aberto usada para monitorar e analisar métricas de diversas fontes de
+dados.
+Ele permite que as pessoas usuárias criem, explorem e compartilhem dashboards
+interativos, com suporte para integrações com bancos de dados como Prometheus,
+InfluxDB, Elasticsearch e outros.
+O Grafana é amplamente utilizado para observabilidade, fornecendo alertas,
+extensibilidade por meio de plugins e um editor de consultas flexível para
+visualização de dados em tempo real.
 
-Note: The Grafana data source for Prometheus is included since Grafana 2.5.0 (2015-10-28).
+Observação: A fonte de dados do Grafana para Prometheus está incluída desde a
+versão 2.5.0 (28/10/2015).
 
-The following shows an example Grafana dashboard which queries Prometheus for data:
+A seguir, um exemplo de painel do Grafana que consulta o Prometheus para obter
+dados:
 
-[![Grafana screenshot](/assets/docs/grafana_prometheus.png)](/assets/docs/grafana_prometheus.png)
+[![Captura de tela do Grafana](/assets/docs/grafana_prometheus.png)](/assets/docs/grafana_prometheus.png)
 
-## Installing
+## Instalação
 
-To install Grafana see the [official Grafana
-documentation](https://grafana.com/grafana/download/).
+Para instalar o Grafana, consulte a
+[documentação oficial do Grafana](https://grafana.com/grafana/download/).
 
-## Using
+## Utilização
 
-By default, Grafana will be listening on
-[http://localhost:3000](http://localhost:3000). The default login is "admin" /
-"admin".
+Por padrão, o Grafana estará escutando em
+[http://localhost:3000](http://localhost:3000).
+O login padrão é "admin" / "admin".
 
-### Creating a Prometheus data source
+### Criando uma fonte de dados Prometheus
 
-To create a Prometheus data source in Grafana:
+Para criar uma fonte de dados Prometheus no Grafana:
 
-1. Click on the "cogwheel" in the sidebar to open the Configuration menu.
-2. Click on "Data Sources".
-3. Click on "Add data source".
-4. Select "Prometheus" as the type.
-5. Set the appropriate Prometheus server URL (for example, `http://localhost:9090/`)
-6. Adjust other data source settings as desired (for example, choosing the right Access method).
-7. Click "Save & Test" to save the new data source.
+1. Clique no ícone de engrenagem na barra lateral para abrir o menu
+   Configuration.
+2. Clique em "Data Sources".
+3. Clique em "Add data source".
+4. Selecione "Prometheus" como o tipo.
+5. Defina a URL do servidor Prometheus apropriada (por exemplo,
+   `http://localhost:9090/`).
+6. Ajuste outras configurações da fonte de dados conforme desejado (por exemplo,
+   escolhendo o método de acesso correto).
+7. Clique em "Salvar e testar" para salvar a nova fonte de dados.
 
-The following shows an example data source configuration:
+A seguir, um exemplo de configuração de fonte de dados:
 
-[![Data source configuration](/assets/docs/grafana_configuring_datasource.png)](/assets/docs/grafana_configuring_datasource.png)
+[![Configuração da fonte de dados](/assets/docs/grafana_configuring_datasource.png)](/assets/docs/grafana_configuring_datasource.png)
 
-### Creating a Prometheus graph
+### Criando um gráfico do Prometheus
 
-Follow the standard way of adding a new Grafana graph. Then:
+Siga o procedimento padrão para adicionar um novo gráfico ao Grafana.
+Em seguida:
 
-1. Click the graph title, then click "Edit".
-2. Under the "Metrics" tab, select your Prometheus data source (bottom right).
-3. Enter any Prometheus expression into the "Query" field, while using the
-   "Metric" field to lookup metrics via autocompletion.
-4. To format the legend names of time series, use the "Legend format" input. For
-   example, to show only the `method` and `status` labels of a returned query
-   result, separated by a dash, you could use the legend format string
-   `{{method}} - {{status}}`.
-5. Tune other graph settings until you have a working graph.
+1. Clique no título do gráfico e depois em "Edit".
+2. Na guia "Metrics", selecione sua fonte de dados do Prometheus (canto
+   inferior direito).
+3. Insira qualquer expressão do Prometheus no campo "Query", usando o campo
+   "Metric" para buscar métricas por meio do recurso de autocompletar.
+4. Para formatar os nomes da legenda das séries temporais, use a opção "Legend
+   format".
+   Por exemplo, para exibir apenas os rótulos `method` e `status` de um
+   resultado de consulta retornado, separados por um hífen, você pode usar a
+   string de formato de legenda `{{method}} - {{status}}`.
+5. Ajuste outras configurações do gráfico até obter um gráfico funcional.
 
-The following shows an example Prometheus graph configuration:
-[![Prometheus graph creation](/assets/docs/grafana_qps_graph.png)](/assets/docs/grafana_qps_graph.png)
+A seguir, um exemplo de configuração de gráfico do Prometheus:
 
-In Grafana 7.2 and later, the `$__rate_interval` variable is
-[recommended](https://grafana.com/docs/grafana/latest/datasources/prometheus/#using-__rate_interval)
-for use in the `rate`and `increase` functions.
+[![Criação de gráfico do Prometheus](/assets/docs/grafana_qps_graph.png)](/assets/docs/grafana_qps_graph.png)
 
-### Importing pre-built dashboards from Grafana.com
+No Grafana 7.2 e versões posteriores, a variável `$__rate_interval` é
+[recomendada](https://grafana.com/docs/grafana/latest/datasources/prometheus/#using-__rate_interval)
+para uso nas funções `rate` e `increase`.
 
-Grafana.com maintains [a collection of shared dashboards](https://grafana.com/dashboards)
-which can be downloaded and used with standalone instances of Grafana. Use
-the Grafana.com "Filter" option to browse dashboards for the "Prometheus"
-data source only.
+### Importando dashboards pré-construídos do Grafana.com
 
-You must currently manually edit the downloaded JSON files and correct the
-`datasource:` entries to reflect the Grafana data source name which you
-chose for your Prometheus server. Use the "Dashboards" → "Home" → "Import"
-option to import the edited dashboard file into your Grafana install.
+O Grafana.com mantém
+[uma coleção de dashboards compartilhados](https://grafana.com/dashboards) que
+podem ser baixados e usados com instâncias independentes do Grafana.
+Use a opção "Filter" do Grafana.com para navegar pelos dashboards da fonte de
+dados "Prometheus".
+
+Atualmente, você precisa editar manualmente os arquivos JSON baixados e corrigir
+as entradas `datasource:` para refletir o nome da fonte de dados do Grafana que
+você escolheu para o seu servidor Prometheus.
+Use a opção "Dashboards" → "Home" → "Importar" para importar o arquivo de
+dashboard editado para a sua instalação do Grafana.

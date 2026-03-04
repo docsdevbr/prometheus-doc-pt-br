@@ -11,56 +11,77 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Console templates
+source_url: https://github.com/prometheus/docs/blob/main/docs/visualization/consoles.md
+revision: 8afdb70ce0dcb6d88a00187310049227409da96d
+status: ready
+
+title: Templates de console
 sort_rank: 4
 ---
 
-Console templates allow for creation of arbitrary consoles using the [Go
-templating language](http://golang.org/pkg/text/template/). These are served
-from the Prometheus server.
+ATENÇÃO: A partir do Prometheus 3.0, os templates e bibliotecas de console não
+são mais fornecidos com o Prometheus.
+Se você deseja usar templates de console, deve fornecer seus próprios templates
+e bibliotecas especificando os parâmetros de linha de comando
+`--web.console.templates` e `--web.console.libraries`.
+Esta página de documentação é mantida para referência histórica e para
+demonstrar os recursos dos templates de console.
+Observe que quaisquer bibliotecas de console referenciadas da versão 2.x do
+Prometheus não são mais mantidas e podem conter vulnerabilidades de segurança
+conhecidas (CVEs).
 
-Console templates are the most powerful way to create templates that can be
-easily managed in source control. There is a learning curve though, so users new
-to this style of monitoring should try out
-[Grafana](/docs/visualization/grafana/) first.
+Os templates de console permitem a criação de consoles arbitrários usando a
+linguagem de templates do Go (http://golang.org/pkg/text/template/).
+Eles são servidos pelo servidor Prometheus.
 
-## Getting started
+Os templates de console são a maneira mais poderosa de criar templates que podem
+ser facilmente gerenciados no controle de versão.
+Existe uma curva de aprendizado, então pessoas usuárias novas nesse estilo de
+monitoramento devem experimentar o [Grafana](/docs/visualization/grafana/)
+primeiro.
 
-Prometheus comes with an example set of consoles to get you going. These can be
-found at `/consoles/index.html.example` on a running Prometheus and will
-display Node Exporter consoles if Prometheus is scraping Node Exporters with a
-`job="node"` label.
+## Começando
 
-The example consoles have 5 parts:
+O Prometheus vem com um conjunto de consoles de exemplo para você começar.
+Eles podem ser encontrados em `/consoles/index.html.example` em uma instância do
+Prometheus em execução e exibirão consoles do Node Exporter se o Prometheus
+estiver coletando dados de Node Exporters com um rótulo `job="node"`.
 
-1. A navigation bar on top
-1. A menu on the left
-1. Time controls on the bottom
-1. The main content in the center, usually graphs
-1. A table on the right
+Os consoles de exemplo têm 5 partes:
 
-The navigation bar is for links to other systems, such as other Prometheis
+1. Uma barra de navegação na parte superior.
+1. Um menu à esquerda.
+1. Controles de tempo na parte inferior.
+1. O conteúdo principal no centro, geralmente gráficos.
+1. Uma tabela à direita.
+
+A barra de navegação serve para links para outros sistemas, como outros sistemas
+do Prometheus
 <sup>[1](/docs/introduction/faq/#what-is-the-plural-of-prometheus)</sup>,
-documentation, and whatever else makes sense to you. The menu is for navigation
-inside the same Prometheus server, which is very useful to be able to quickly
-open a console in another tab to correlate information. Both are configured in
-`console_libraries/menu.lib`.
+documentação e qualquer outra coisa que faça sentido para você.
+O menu serve para navegação dentro do mesmo servidor Prometheus, o que é muito
+útil para poder abrir rapidamente um console em outra aba para correlacionar
+informações.
+Ambos são configurados em `console_libraries/menu.lib`.
 
-The time controls allow changing of the duration and range of the graphs.
-Console URLs can be shared and will show the same graphs for others.
+Os controles de tempo permitem alterar a duração e o intervalo dos gráficos.
+As URLs do console podem ser compartilhadas e exibirão os mesmos gráficos para
+outras pessoas usuárias.
 
-The main content is usually graphs. There is a configurable JavaScript graphing
-library provided that will handle requesting data from Prometheus, and rendering
-it via [Rickshaw](https://shutterstock.github.io/rickshaw/).
+O conteúdo principal geralmente são gráficos.
+Há uma biblioteca de gráficos JavaScript configurável que lida com a requisição
+de dados do Prometheus e a renderização deles via
+[Rickshaw](https://shutterstock.github.io/rickshaw/).
 
-Finally, the table on the right can be used to display statistics in a more
-compact form than graphs.
+Por fim, a tabela à direita pode ser usada para exibir estatísticas de forma
+mais compacta do que os gráficos.
 
-## Example Console
+## Exemplo de console
 
-This is a basic console. It shows the number of tasks, how many of them are up,
-the average CPU usage, and the average memory usage in the right-hand-side
-table. The main content has a queries-per-second graph.
+Este é um console básico.
+Ele mostra o número de tarefas, quantas delas estão em execução, o uso médio da
+CPU e o uso médio de memória na tabela à direita.
+O conteúdo principal apresenta um gráfico de consultas por segundo.
 
 ```
 {{template "head" .}}
@@ -111,33 +132,43 @@ new PromConsole.Graph({
 {{template "tail"}}
 ```
 
-The `prom_right_table_head` and `prom_right_table_tail` templates contain the
-right-hand-side table. This is optional.
+Os templates `prom_right_table_head` e `prom_right_table_tail` contêm a tabela
+do lado direito.
+Isso é opcional.
 
-`prom_query_drilldown` is a template that will evaluate the expression passed to it, format it,
-and link to the expression in the [expression browser](/docs/visualization/browser/). The first
-argument is the expression. The second argument is the unit to use. The third
-argument is how to format the output. Only the first argument is required.
+`prom_query_drilldown` é um template que avaliará a expressão passada para ele,
+formatará a expressão e criará um link para a expressão no
+[navegador de expressões](/docs/visualization/browser/).
+O primeiro argumento é a expressão.
+O segundo argumento é a unidade a ser usada.
+O terceiro argumento define como formatar a saída.
+Apenas o primeiro argumento é obrigatório.
 
-Valid output formats for the third argument to `prom_query_drilldown`:
+Formatos de saída válidos para o terceiro argumento de `prom_query_drilldown`:
 
-* Not specified: Default Go display output.
-* `humanize`: Display the result using [metric prefixes](http://en.wikipedia.org/wiki/Metric_prefix).
-* `humanizeNoSmallPrefix`: For absolute values greater than 1, display the
-  result using [metric prefixes](http://en.wikipedia.org/wiki/Metric_prefix). For
-  absolute values less than 1, display 3 significant digits. This is useful
-  to avoid units such as milliqueries per second that can be produced by
-  `humanize`.
-* `humanize1024`: Display the humanized result using a base of 1024 rather than 1000.
-  This is usually used with `B` as the second argument to produce units such as `KiB` and `MiB`.
-* `printf.3g`: Display 3 significant digits.
+- Não especificado: Saída de exibição padrão do Go.
+- `humanize`: Exibe o resultado usando
+  [prefixos de métricas](http://en.wikipedia.org/wiki/Metric_prefix).
+- `humanizeNoSmallPrefix`: Para valores absolutos maiores que 1, exibe o
+  resultado usando
+  [prefixos métricos](http://en.wikipedia.org/wiki/Metric_prefix).
+  Para valores absolutos menores que 1, exibe 3 dígitos significativos.
+  Isso é útil para evitar unidades como miligramas por segundo que podem ser
+  produzidas por `humanize`.
+- `humanize1024`: Exibe o resultado humanizado usando uma base de 1024 em vez de
+  1000.
+  Isso geralmente é usado com `B` como segundo argumento para produzir unidades
+  como `KiB` e `MiB`.
+- `printf.3g`: Exibe 3 dígitos significativos.
 
-Custom formats can be defined. See
-[prom.lib](https://github.com/prometheus/prometheus/blob/main/console_libraries/prom.lib) for examples.
+Formatos personalizados podem ser definidos.
+Consulte
+[prom.lib](https://github.com/prometheus/prometheus/blob/release-2.55/console_libraries/prom.lib)
+para exemplos.
 
-## Graph Library
+## Biblioteca de gráficos
 
-The graph library is invoked as:
+A biblioteca de gráficos é invocada como:
 
 ```
 <div id="queryGraph"></div>
@@ -149,38 +180,41 @@ new PromConsole.Graph({
 </script>
 ```
 
-The `head` template loads the required Javascript and CSS.
+O template `head` carrega o Javascript e o CSS necessários.
 
-Parameters to the graph library:
+Parâmetros da biblioteca de gráficos:
 
-| Name          | Description
-| ------------- | -------------
-| expr          | Required. Expression to graph. Can be a list.
-| node          | Required. DOM node to render into.
-| duration      | Optional. Duration of the graph. Defaults to 1 hour.
-| endTime       | Optional. Unixtime the graph ends at. Defaults to now.
-| width         | Optional. Width of the graph, excluding titles. Defaults to auto-detection.
-| height        | Optional. Height of the graph, excluding titles and legends. Defaults to 200 pixels.
-| min           | Optional. Minimum x-axis value. Defaults to lowest data value.
-| max           | Optional. Maximum y-axis value. Defaults to highest data value.
-| renderer      | Optional. Type of graph. Options are `line` and `area` (stacked graph). Defaults to `line`.
-| name          | Optional. Title of plots in legend and hover detail. If passed a string, `[[ label ]]` will be substituted with the label value. If passed a function, it will be passed a map of labels and should return the name as a string. Can be a list.
-| xTitle        | Optional. Title of the x-axis. Defaults to `Time`.
-| yUnits        | Optional. Units of the y-axis. Defaults to empty.
-| yTitle        | Optional. Title of the y-axis. Defaults to empty.
-| yAxisFormatter | Optional. Number formatter for the y-axis. Defaults to `PromConsole.NumberFormatter.humanize`.
-| yHoverFormatter | Optional. Number formatter for the hover detail. Defaults to `PromConsole.NumberFormatter.humanizeExact`.
-| colorScheme   | Optional. Color scheme to be used by the plots. Can be either a list of hex color codes or one of the [color scheme names](https://github.com/shutterstock/rickshaw/blob/master/src/js/Rickshaw.Fixtures.Color.js) supported by Rickshaw. Defaults to `'colorwheel'`.
+| Nome            | Descrição
+|-----------------| -------------
+| expr            | Obrigatório. Expressão a ser representada no gráfico. Pode ser uma lista.
+| node            | Required. Obrigatório. Nó DOM onde renderizar.
+| duration        | Optional. Opcional. Duração do gráfico. O padrão é 1 hora.
+| endTime         | Opcional. Horário Unix em que o gráfico termina. O padrão é agora.
+| width           | Opcional. Largura do gráfico, excluindo títulos. O padrão é detecção automática.
+| height          | Opcional. Altura do gráfico, excluindo títulos e legendas. O padrão é 200 pixels.
+| min             | Opcional. Valor mínimo do eixo x. O padrão é o menor valor de dados.
+| max             | Opcional. Valor máximo do eixo y. O padrão é o maior valor de dados.
+| renderer        | Opcional. Tipo de gráfico. As opções são `line` e `area` (gráfico empilhado). O padrão é `line`.
+| name            | Opcional. Título dos gráficos na legenda e nos detalhes ao passar o mouse. Se for passada uma string, `[[ label ]]` será substituído pelo valor do rótulo. Se for passada uma função, ela receberá um mapa de rótulos e deverá retornar o nome como uma string. Pode ser uma lista.
+| xTitle          | Opcional. Título do eixo x. O padrão é `Time`.
+| yUnits          | Opcional. Unidades do eixo y. O padrão é vazio.
+| yTitle          | Opcional. Título do eixo y. O padrão é vazio.
+| yAxisFormatter  | Opcional. Formatador de números para o eixo y. O padrão é `PromConsole.NumberFormatter.humanize`.
+| yHoverFormatter | Opcional. Formatador de números para os detalhes exibidos ao passar o mouse. O padrão é `PromConsole.NumberFormatter.humanizeExact`.
+| colorScheme     | Opcional. Esquema de cores a ser usado nos gráficos. Pode ser uma lista de códigos de cores hexadecimais ou um dos [nomes de esquema de cores](https://github.com/shutterstock/rickshaw/blob/master/src/js/Rickshaw.Fixtures.Color.js) suportados pelo Rickshaw. O padrão é `'colorwheel'`.
 
-If both `expr` and `name` are lists, they must be of the same length. The name
-will be applied to the plots for the corresponding expression.
+Se `expr` e `name` forem listas, elas devem ter o mesmo comprimento.
+O nome será aplicado aos gráficos para a expressão correspondente.
 
-Valid options for the `yAxisFormatter` and `yHoverFormatter`:
+Opções válidas para `yAxisFormatter` e `yHoverFormatter`:
 
-* `PromConsole.NumberFormatter.humanize`: Format using [metric prefixes](http://en.wikipedia.org/wiki/Metric_prefix).
-* `PromConsole.NumberFormatter.humanizeNoSmallPrefix`: For absolute values
-  greater than 1, format using using [metric prefixes](http://en.wikipedia.org/wiki/Metric_prefix).
-  For absolute values less than 1, format with 3 significant digits. This is
-  useful to avoid units such as milliqueries per second that can be produced by
-  `PromConsole.NumberFormatter.humanize`.
-* `PromConsole.NumberFormatter.humanize1024`: Format the humanized result using a base of 1024 rather than 1000.
+- `PromConsole.NumberFormatter.humanize`: Formata usando
+  [prefixos métricos](http://en.wikipedia.org/wiki/Metric_prefix).
+- `PromConsole.NumberFormatter.humanizeNoSmallPrefix`: Para valores absolutos
+  maiores que 1, formata usando
+  [prefixos métricos](http://en.wikipedia.org/wiki/Metric_prefix).
+  Para valores absolutos menores que 1, formata com 3 dígitos significativos.
+  Isso é útil para evitar unidades como milésimos de segundo que podem ser
+  produzidas por `PromConsole.NumberFormatter.humanize`.
+- `PromConsole.NumberFormatter.humanize1024`: Formata o resultado humanizado
+  usando uma base de 1024 em vez de 1000.

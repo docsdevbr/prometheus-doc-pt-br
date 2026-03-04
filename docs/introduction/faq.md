@@ -211,7 +211,7 @@ métricas do Prometheus.
 Consulte a documentação das
 [bibliotecas de cliente](/docs/instrumenting/clientlibs/) para obter detalhes.
 
-Se você estiver interessado em contribuir com uma biblioteca de cliente para uma
+Se você estiver interessado em contribuir com uma biblioteca cliente para uma
 nova linguagem, consulte os
 [formatos de exposição](/docs/instrumenting/exposition_formats/).
 

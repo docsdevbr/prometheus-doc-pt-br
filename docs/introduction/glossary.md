@@ -11,133 +11,175 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Glossary
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/glossary.md
+revision: f2dfa4b406ac54709829fd1411578fed8d969eec
+status: ready
+
+title: Glossário
 sort_rank: 9
 ---
 
-### Alert
+## Adaptador de gravação remota
 
-An alert is the outcome of an alerting rule in Prometheus that is
-actively firing. Alerts are sent from Prometheus to the Alertmanager.
+Nem todos os sistemas suportam diretamente a gravação remota.
+Um adaptador de gravação remota fica entre o Prometheus e outro sistema,
+convertendo as amostras na gravação remota em um formato que o outro sistema
+possa entender.
 
-### Alertmanager
+## Adaptador de leitura remota
 
-The [Alertmanager](/docs/alerting/latest/overview/) takes in alerts, aggregates them into
-groups, de-duplicates, applies silences, throttles, and then sends out
-notifications to email, Pagerduty, Slack etc.
+Nem todos os sistemas suportam diretamente a leitura remota.
+Um adaptador de leitura remota fica entre o Prometheus e outro sistema,
+convertendo as requisições e respostas de séries temporais entre eles.
 
-### Bridge
+## Alerta
 
-A bridge is a component that takes samples from a client library and
-exposes them to a non-Prometheus monitoring system. For example, the Python, Go, and Java clients can export metrics to Graphite.
+Um alerta é o resultado de uma regra de alerta no Prometheus que está em
+execução.
+Os alertas são enviados do Prometheus para o Alertmanager.
 
-### Client library
+## Alertmanager
 
-A client library is a library in some language (e.g. Go, Java, Python, Ruby)
-that makes it easy to directly instrument your code, write custom collectors to
-pull metrics from other systems and expose the metrics to Prometheus.
+O [Alertmanager](/docs/alerting/latest/overview/) recebe alertas, os agrega em
+grupos, remove duplicatas, silencia, limita a taxa de envio e, em seguida, envia
+notificações por e-mail, PagerDuty, Slack, etc.
 
-### Collector
+## Alvo
 
-A collector is a part of an exporter that represents a set of metrics. It may be
-a single metric if it is part of direct instrumentation, or many metrics if it is pulling metrics from another system.
+Um alvo é a definição de um objeto a ser coletado.
+Por exemplo, quais rótulos aplicar, qualquer autenticação necessária para
+conectar ou outras informações que definem como a coleta ocorrerá.
 
-### Direct instrumentation
+## Amostra
 
-Direct instrumentation is instrumentation added inline as part of the source code of a program, using a [client library](#client-library).
+Uma amostra é um valor único em um ponto específico no tempo em uma série
+temporal.
 
-### Endpoint
+No Prometheus, cada amostra consiste em um valor float64 e um timestamp com
+precisão de milissegundos.
 
-A source of metrics that can be scraped, usually corresponding to a single process.
+## Biblioteca cliente
 
-### Exporter
+Uma biblioteca cliente é uma biblioteca em alguma linguagem (por exemplo, Go,
+Java, Python, Ruby) que facilita a instrumentação direta do seu código, a
+escrita de coletores personalizados para extrair métricas de outros sistemas e
+expor as métricas ao Prometheus.
 
-An exporter is a binary running alongside the application you
-want to obtain metrics from. The exporter exposes Prometheus metrics, commonly by converting metrics that are exposed in a non-Prometheus format into a format that Prometheus supports.
+## Coletor
 
-### Instance
+Um coletor é parte de um exportador que representa um conjunto de métricas.
+Pode ser uma única métrica se fizer parte da instrumentação direta, ou várias
+métricas se estiver extraindo métricas de outro sistema.
 
-An instance is a label that uniquely identifies a target in a job.
+## Endpoint
 
-### Job
+Uma fonte de métricas que podem ser coletadas, geralmente correspondente a um
+único processo.
 
-A collection of targets with the same purpose, for example monitoring a group of like processes replicated for scalability or reliability, is called a job.
+## Endpoint de gravação remota
 
-### Notification
+Um endpoint de gravação remota é o sistema com o qual o Prometheus se comunica
+ao realizar uma gravação remota.
 
-A notification represents a group of one or more alerts, and is sent by the Alertmanager to email, Pagerduty, Slack etc.
+## Endpoint de leitura remota
 
-### Promdash
+Um endpoint de leitura remota é o sistema com o qual o Prometheus se comunica ao
+realizar uma leitura remota.
 
-Promdash was a native dashboard builder for Prometheus. It has been deprecated and replaced by [Grafana](../visualization/grafana.md).
+## Exportador
 
-### Prometheus
+Um exportador é um binário executado com a aplicação da qual você deseja obter
+métricas.
+O exportador expõe métricas do Prometheus, geralmente convertendo métricas
+expostas em um formato não compatível com o Prometheus para um formato suportado
+pelo Prometheus.
 
-Prometheus usually refers to the core binary of the Prometheus system. It may
-also refer to the Prometheus monitoring system as a whole.
+## Gravação remota
 
-### PromQL
+A gravação remota é um recurso do Prometheus que permite o envio de amostras
+ingeridas em tempo real para outros sistemas, como armazenamento de longo prazo.
 
-[PromQL](/docs/prometheus/latest/querying/basics/) is the Prometheus Query Language. It allows for
-a wide range of operations including aggregation, slicing and dicing, prediction and joins.
+## Instância
 
-### Pushgateway
+Uma instância é um rótulo que identifica exclusivamente um alvo em uma tarefa.
 
-The [Pushgateway](../instrumenting/pushing.md) persists the most recent push
-of metrics from batch jobs. This allows Prometheus to scrape their metrics
-after they have terminated.
+## Instrumentação direta
 
-### Recording Rules
+A instrumentação direta é a instrumentação adicionada diretamente no
+código-fonte de um programa, usando uma
+[biblioteca cliente](#biblioteca-cliente).
 
-Recording rules precompute frequently needed or computationally expensive expressions
-and save their results as a new set of time series.
+## Leitura remota
 
-### Remote Read
+A leitura remota é um recurso do Prometheus que permite a leitura transparente
+de séries temporais de outros sistemas (como armazenamento de longo prazo) como
+parte de consultas.
 
-Remote read is a Prometheus feature that allows transparent reading of time series from
-other systems (such as long term storage) as part of queries.
+## Mixin
 
-### Remote Read Adapter
+Um mixin é um conjunto reutilizável e extensível de alertas do Prometheus,
+regras de gravação e painéis do Grafana para um componente ou sistema
+específico.
+Os mixins são normalmente empacotados usando o [Jsonnet](https://jsonnet.org/) e
+podem ser combinados para criar configurações de monitoramento abrangentes.
+Eles permitem o monitoramento padronizado em componentes de infraestrutura
+semelhantes.
 
-Not all systems directly support remote read. A remote read adapter sits between
-Prometheus and another system, converting time series requests and responses between them.
+## Notificação
 
-### Remote Read Endpoint
+Uma notificação representa um grupo de um ou mais alertas e é enviada pelo
+Alertmanager para e-mail, PagerDuty, Slack, etc.
 
-A remote read endpoint is what Prometheus talks to when doing a remote read.
+## Ponte
 
-### Remote Write
+Uma ponte é um componente que recebe amostras de uma biblioteca cliente e as
+expõe a um sistema de monitoramento que não seja o Prometheus.
+Por exemplo, os clientes Python, Go e Java podem exportar métricas para o
+Graphite.
 
-Remote write is a Prometheus feature that allows sending ingested samples on the
-fly to other systems, such as long term storage.
+## Promdash
 
-### Remote Write Adapter
+O Promdash era um construtor de dashboards nativo do Prometheus.
+Ele foi descontinuado e substituído pelo [Grafana](../visualization/grafana.md).
 
-Not all systems directly support remote write. A remote write adapter sits
-between Prometheus and another system, converting the samples in the remote
-write into a format the other system can understand.
+## Prometheus
 
-### Remote Write Endpoint
+Prometheus geralmente se refere ao binário principal do sistema Prometheus.
+Também pode se referir a todo o sistema de monitoramento Prometheus.
 
-A remote write endpoint is what Prometheus talks to when doing a remote write.
+## PromQL
 
-### Sample
+[PromQL](/docs/prometheus/latest/querying/basics/) é a Linguagem de Consulta do
+Prometheus.
+Ela permite uma ampla gama de operações, incluindo agregação, segmentação e
+análise, previsão e junções.
 
-A sample is a single value at a point in time in a time series.
+## Pushgateway
 
-In Prometheus, each sample consists of a float64 value and a millisecond-precision timestamp.
+O [Pushgateway](../instrumenting/pushing.md) persiste o envio mais recente de
+métricas de trabalhos em lote.
+Isso permite que o Prometheus colete suas métricas após a conclusão dos
+trabalhos.
 
-### Silence
+## Regras de gravação
 
-A silence in the Alertmanager prevents alerts, with labels matching the silence, from
-being included in notifications.
+As regras de gravação pré-computam expressões frequentemente necessárias ou
+computacionalmente custosas e salvam seus resultados como um novo conjunto de
+séries temporais.
 
-### Target
+## Séries temporais
 
-A target is the definition of an object to scrape. For example, what labels to apply, any authentication required to connect, or other information that defines how the scrape will occur.
+As séries temporais do Prometheus são fluxos de valores com timestamp
+pertencentes à mesma métrica e ao mesmo conjunto de dimensões rotuladas.
+O Prometheus armazena todos os dados como séries temporais.
 
-### Time Series
+## Silenciamento
 
-The Prometheus time series are streams of timestamped values belonging to the same metric and the same set of labeled dimensions.
-Prometheus stores all data as time series.
+Um silenciamento no Alertmanager impede que alertas com rótulos correspondentes
+ao silenciamento sejam incluídos nas notificações.
 
+## Tarefa
+
+Um conjunto de alvos com o mesmo propósito, por exemplo, monitorar um grupo de
+processos semelhantes replicados para escalabilidade ou confiabilidade, é
+chamado de tarefa.

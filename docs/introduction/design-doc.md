@@ -11,25 +11,32 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Design documents
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/design-doc.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Documentos de design
 sort_rank: 7
 ---
 
-See the [github.com/prometheus/proposals](https://github.com/prometheus/proposals)
-repository to see all the past and current proposals for the Prometheus Ecosystem.
+Consulte o repositório
+[github.com/prometheus/proposals](https://github.com/prometheus/proposals)
+para ver todas as propostas passadas e atuais para o Ecossistema Prometheus.
 
-If you are interested in creating a new proposal, read our [proposal process](https://github.com/prometheus/proposals#proposal-process).
+Se você tiver interesse em criar uma nova proposta, leia nosso
+[processo de propostas](https://github.com/prometheus/proposals#proposal-process).
 
-## Problem statements and exploratory documents
+## Declarações de problemas e documentos exploratórios
 
-Sometimes we're looking even further into potential futures. The documents in
-this section are largely exploratory. They should be taken as informing our
-collective thoughts, not as anything concrete or specific.
+Às vezes, estamos explorando futuros potenciais.
+Os documentos nesta seção são na maioria exploratórios.
+Devem ser considerados como informações sobre nossos pensamentos coletivos, e
+não como algo concreto ou específico.
 
-| Document                                                                                                                             | Initial date |
-|--------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| [Prometheus is not feature complete](https://docs.google.com/document/d/1lEP7pGYM2-5GT9fAIDqrOecG86VRU8-1qAV8b6xZ29Q)                | 2020-05      |
-| [Thoughts about timestamps and durations in PromQL](https://docs.google.com/document/d/1jMeDsLvDfO92Qnry_JLAXalvMRzMSB1sBr9V7LolpYM) | 2020-10      |
-| [Prometheus, OpenMetrics & OTLP](https://docs.google.com/document/d/1hn-u6WKLHxIsqYT1_u6eh94lyQeXrFaAouMshJcQFXs)                    | 2021-03      |
-| [Prometheus Sparse Histograms and PromQL](https://docs.google.com/document/d/1ch6ru8GKg03N02jRjYriurt-CZqUVY09evPg6yKTA1s/edit)      | 2021-10      |
-| [Quoting Prometheus names](https://docs.google.com/document/d/1yFj5QSd1AgCYecZ9EJ8f2t4OgF2KBZgJYVde-uzVEtI/edit)                     | 2023-01      |
+| Documento                                                                                                                                    | Data inicial |
+|----------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| [Prometheus não está completo em termos de funcionalidades](https://docs.google.com/document/d/1lEP7pGYM2-5GT9fAIDqrOecG86VRU8-1qAV8b6xZ29Q) | 2020-05      |
+| [Considerações sobre timestamps e durações em PromQL](https://docs.google.com/document/d/1jMeDsLvDfO92Qnry_JLAXalvMRzMSB1sBr9V7LolpYM)       | 2020-10      |
+| [Prometheus, OpenMetrics e OTLP](https://docs.google.com/document/d/1hn-u6WKLHxIsqYT1_u6eh94lyQeXrFaAouMshJcQFXs)                            | 2021-03      |
+| [Histogramas esparsos do Prometheus e PromQL](https://docs.google.com/document/d/1ch6ru8GKg03N02jRjYriurt-CZqUVY09evPg6yKTA1s/edit)          | 2021-10      |
+| [Citando nomes do Prometheus](https://docs.google.com/document/d/1yFj5QSd1AgCYecZ9EJ8f2t4OgF2KBZgJYVde-uzVEtI/edit)                          | 2023-01      |

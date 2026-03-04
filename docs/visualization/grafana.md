@@ -49,9 +49,9 @@ Por padrão, o Grafana estará escutando em
 [http://localhost:3000](http://localhost:3000).
 O login padrão é "admin" / "admin".
 
-### Criando uma fonte de dados Prometheus
+### Criando uma fonte de dados do Prometheus
 
-Para criar uma fonte de dados Prometheus no Grafana:
+Para criar uma fonte de dados do Prometheus no Grafana:
 
 1. Clique no ícone de engrenagem na barra lateral para abrir o menu
    Configuration.

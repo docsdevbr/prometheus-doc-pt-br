@@ -11,39 +11,50 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Perses support for Prometheus
+source_url: https://github.com/prometheus/docs/blob/main/docs/visualization/perses.md
+revision: 19b2d910956d0aac4cb5b1358cbe17d33be649cf
+status: ready
+
+title: Suporte do Perses para Prometheus
 nav_title: Perses
 sort_rank: 3
 ---
 
-[Perses](https://perses.dev) is an open-source dashboard and visualization platform designed for observability, with
-native support for Prometheus as a data source.
-It enables users to create, manage, and share dashboards for monitoring metrics and visualizing data.
-Perses aims to provide a simple, flexible, and extensible alternative to other dashboarding tools, focusing on ease of
-use, community-driven development, GitOps capabilities and dashboard as code approach.
+[Perses](https://perses.dev) é uma plataforma de visualização e dashboards de
+código aberto, projetada para observabilidade, com suporte nativo para
+Prometheus como fonte de dados.
+Ela permite que as pessoas usuárias criem, gerenciem e compartilhem dashboards
+para monitorar métricas e visualizar dados.
+O Perses visa fornecer uma alternativa simples, flexível e extensível a outras
+ferramentas de dashboards, com foco na facilidade de uso, desenvolvimento
+orientado pela comunidade, recursos GitOps e abordagem de dashboard como código.
 
-Here is an example of a Perses dashboard querying Prometheus for data:
+Aqui está um exemplo de um painel do Perses consultando o Prometheus para obter
+dados:
 
-[![Perses screenshot](/assets/docs/perses_prometheus.png)](/assets/docs/perses_prometheus.png)
+[![Captura de tela do Perses](/assets/docs/perses_prometheus.png)](/assets/docs/perses_prometheus.png)
 
-## Installing
+## Instalação
 
-To install Perses, see the official [Perses documentation](https://perses.dev/perses/docs/installation/in-a-container/).
+Para instalar o Perses, consulte a
+[documentação oficial do Perses](https://perses.dev/perses/docs/installation/in-a-container/).
 
-## Using
+## Uso
 
-By default, Perses will be listening on port `8080`. You can access the web UI at `http://localhost:8080`. There is no
-login by default.
+Por padrão, o Perses estará escutando na porta `8080`.
+Você pode acessar a interface web em `http://localhost:8080`.
+Não há login por padrão.
 
-### Creating a Prometheus data source
+### Criando uma fonte de dados do Prometheus
 
-To learn about how to set up a data source in Perses, please refer
-to [Perses documentation](https://perses.dev/perses/docs/concepts/datasources).
-Once this connection to your Prometheus instance is configured, you are able to query it from the Dashboard and Explore
-views.
+Para saber como configurar uma fonte de dados no Perses, consulte a
+[documentação do Perses](https://perses.dev/perses/docs/concepts/datasources).
+Após configurar essa conexão com sua instância do Prometheus, você poderá
+consultá-la a partir das visualizações Dashboard e Explore.
 
-### Importing pre-built dashboards
+### Importando dashboards pré-construídos
 
-Perses is providing a set of pre-built dashboards that you can import into your instance. These dashboards are
-maintained by the community and can be found in
-the [Perses dashboard repository](https://github.com/perses/community-dashboards)
+O Perses oferece um conjunto de dashboards pré-construídos que você pode
+importar para sua instância.
+Esses dashboards são mantidos pela comunidade e podem ser encontrados no
+[repositório de dashboards do Perses](https://github.com/perses/community-dashboards).

@@ -11,202 +11,265 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Frequently asked questions
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/faq.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Perguntas frequentes
 nav_title: FAQ
 sort_rank: 5
 ---
 
-## General
+## Geral
 
-### What is Prometheus?
+### O que é o Prometheus?
 
-Prometheus is an open-source systems monitoring and alerting toolkit
-with an active ecosystem.
-It is the only system directly supported by [Kubernetes](https://kubernetes.io/) and the de facto standard across the [cloud native ecosystem](https://landscape.cncf.io/).
-See the [overview](/docs/introduction/overview/).
+O Prometheus é um conjunto de ferramentas de código aberto para monitoramento e
+alertas de sistemas com um ecossistema ativo.
+É o único sistema diretamente suportado pelo
+[Kubernetes](https://kubernetes.io/) e o padrão de fato em todo o
+[ecossistema nativo da nuvem](https://landscape.cncf.io/).
+Consulte a [visão geral](/docs/introduction/overview/).
 
-### How does Prometheus compare against other monitoring systems?
+### Como o Prometheus se compara a outros sistemas de monitoramento?
 
-See the [comparison](/docs/introduction/comparison/) page.
+Consulte a página de [comparação](/docs/introduction/comparison/).
 
-### What dependencies does Prometheus have?
+### Quais são as dependências do Prometheus?
 
-The main Prometheus server runs standalone as a single monolithic binary and has no external dependencies.
+O servidor principal do Prometheus é executado de forma independente como um
+único binário monolítico e não possui dependências externas.
 
-#### Is this cloud native?
+#### Isso é nativo da nuvem?
 
-Yes.
+Sim.
 
-Cloud native is a flexible operating model, breaking up old service boundaries to allow for more flexible and scalable deployments.
+O modelo operacional nativo da nuvem é flexível, rompendo com as antigas
+fronteiras de serviço para permitir implantações mais flexíveis e escaláveis.
 
-Prometheus's [service discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/) integrates with most tools and clouds. Its dimensional data model and scale into the tens of millions of active series allows it to monitor large cloud-native deployments.
-There are always trade-offs to make when running services, and Prometheus values reliably getting alerts out to humans above all else.
+A
+[descoberta de serviços](https://prometheus.io/docs/prometheus/latest/configuration/configuration/)
+do Prometheus se integra com a maioria das ferramentas e nuvens.
+Seu modelo de dados dimensionais e sua escalabilidade para dezenas de milhões de
+séries ativas permitem o monitoramento de grandes implantações nativas da nuvem.
+Sempre há compromissos a serem feitas ao executar serviços, e o Prometheus
+prioriza, acima de tudo, o envio confiável de alertas para pessoas.
 
-### Can Prometheus be made highly available?
+### É possível tornar o Prometheus altamente disponível?
 
-Yes, run identical Prometheus servers on two or more separate machines.
-Identical alerts will be deduplicated by the [Alertmanager](https://github.com/prometheus/alertmanager).
+Sim, execute servidores Prometheus idênticos em duas ou mais máquinas separadas.
+Alertas idênticos serão desduplicados pelo
+[Alertmanager](https://github.com/prometheus/alertmanager).
 
-Alertmanager supports [high availability](https://github.com/prometheus/alertmanager#high-availability) by interconnecting multiple Alertmanager instances to build an Alertmanager cluster. Instances of a cluster communicate using a gossip protocol managed via [HashiCorp's Memberlist](https://github.com/hashicorp/memberlist) library.
+O Alertmanager oferece suporte à
+[alta disponibilidade](https://github.com/prometheus/alertmanager#high-availability)
+interconectando várias instâncias do Alertmanager para criar um cluster.
+As instâncias de um cluster se comunicam usando um protocolo de comunicação
+gerenciado pela biblioteca
+[Memberlist da HashiCorp](https://github.com/hashicorp/memberlist).
 
-### I was told Prometheus “doesn't scale”.
+### Me disseram que o Prometheus "não é escalável".
 
-This is often more of a marketing claim than anything else.
+Isso geralmente é mais uma afirmação de marketing do que qualquer outra coisa.
 
-A single instance of Prometheus can be more performant than some systems positioning themselves as long term storage solution for Prometheus.
-You can run Prometheus reliably with tens of millions of active series.
+Uma única instância do Prometheus pode ter um desempenho melhor do que alguns
+sistemas que se posicionam como soluções de armazenamento de longo prazo para o
+Prometheus.
+Você pode executar o Prometheus de forma confiável com dezenas de milhões de
+séries ativas.
 
-If you need more than that, there are several options. [Scaling and Federating Prometheus](https://www.robustperception.io/scaling-and-federating-prometheus/) on the Robust Perception blog is a good starting point, as are the long storage systems listed on our [integrations page](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage).
+Se precisar de mais do que isso, existem várias opções.
+O artigo
+[Escalando e federando o Prometheus](https://www.robustperception.io/scaling-and-federating-prometheus/)
+no blog da Robust Perception é um bom ponto de partida, assim como os sistemas
+de armazenamento de longo prazo listados em nossa
+[página de integrações](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage).
 
-### What language is Prometheus written in?
+### Em que linguagem o Prometheus foi escrito?
 
-Most Prometheus components are written in Go. Some are also written in Java,
-Python, and Ruby.
+A maioria dos componentes do Prometheus são escritos em Go.
+Alguns também são escritos em Java, Python e Ruby.
 
-### How stable are Prometheus features, storage formats, and APIs?
+### Quão estáveis são os recursos, formatos de armazenamento e APIs do Prometheus?
 
-All repositories in the Prometheus GitHub organization that have reached
-version 1.0.0 broadly follow
-[semantic versioning](http://semver.org/). Breaking changes are indicated by
-increments of the major version. Exceptions are possible for experimental
-components, which are clearly marked as such in announcements.
+Todos os repositórios da organização Prometheus no GitHub que atingiram a versão
+1.0.0 seguem amplamente o [versionamento semântico](http://semver.org/).
+Alterações que quebram a compatibilidade são indicadas por incrementos na versão
+principal.
+Exceções são possíveis para componentes experimentais, que são claramente
+marcados como tal nos anúncios.
 
-Even repositories that have not yet reached version 1.0.0 are, in general, quite
-stable. We aim for a proper release process and an eventual 1.0.0 release for
-each repository. In any case, breaking changes will be pointed out in release
-notes (marked by `[CHANGE]`) or communicated clearly for components that do not
-have formal releases yet.
+Mesmo os repositórios que ainda não atingiram a versão 1.0.0 são, em geral,
+bastante estáveis.
+Nosso objetivo é um processo de lançamento adequado e um lançamento eventual da
+versão 1.0.0 para cada repositório.
+Em qualquer caso, alterações que quebram a compatibilidade serão apontadas nas
+notas de lançamento (marcadas por `[CHANGE]`) ou comunicadas claramente para
+componentes que ainda não possuem lançamentos formais.
 
-### Why do you pull rather than push?
+### Por que usar o método pull em vez do push?
 
-Pulling over HTTP offers a number of advantages:
+O método pull via HTTP oferece diversas vantagens:
 
-* You can start extra monitoring instances as needed, e.g. on your laptop when developing changes.
-* You can more easily and reliably tell if a target is down.
-* You can manually go to a target and inspect its health with a web browser.
+- Você pode iniciar instâncias de monitoramento adicionais conforme necessário,
+  por exemplo, em seu notebook durante o desenvolvimento de alterações.
+- Você pode verificar com mais facilidade e confiabilidade se um alvo está
+  inativo.
+- Você pode acessar manualmente um alvo e inspecionar seu status com um
+  navegador web.
 
-Overall, we believe that pulling is slightly better than pushing, but it should
-not be considered a major point when considering a monitoring system.
+Em geral, acreditamos que o método pull é ligeiramente melhor do que o push, mas
+isso não deve ser considerado um fator decisivo na escolha de um sistema de
+monitoramento.
 
-For cases where you must push, we offer the [Pushgateway](/docs/instrumenting/pushing/).
+Para casos em que o push é necessário, oferecemos o
+[Pushgateway](/docs/instrumenting/pushing/).
 
-### How to feed logs into Prometheus?
+### Como alimentar o Prometheus com logs?
 
-Short answer: Don't! Use something like [Grafana Loki](https://grafana.com/oss/loki/) or [OpenSearch](https://opensearch.org/) instead.
+Resposta curta: Não faça isso!
+Use algo como o [Grafana Loki](https://grafana.com/oss/loki/) ou o
+[OpenSearch](https://opensearch.org/).
 
-Longer answer: Prometheus is a system to collect and process metrics, not an
-event logging system. The Grafana blog post
-[Logs and Metrics and Graphs, Oh My!](https://grafana.com/blog/2016/01/05/logs-and-metrics-and-graphs-oh-my/)
-provides more details about the differences between logs and metrics.
+Resposta longa: O Prometheus é um sistema para coletar e processar métricas, não
+um sistema de logging de eventos.
+A postagem do blog do Grafana,
+[Logs and Metrics and Graphs, Oh My!](https://grafana.com/blog/2016/01/05/logs-and-metrics-and-graphs-oh-my/),
+fornece mais detalhes sobre as diferenças entre logs e métricas.
 
-If you want to extract Prometheus metrics from application logs, Grafana Loki is designed for just that. See Loki's [metric queries](https://grafana.com/docs/loki/latest/logql/metric_queries/) documentation.
+Se você deseja extrair métricas do Prometheus a partir de logs de aplicações, o
+Grafana Loki foi projetado exatamente para isso.
+Consulte a documentação de
+[consultas de métricas](https://grafana.com/docs/loki/latest/logql/metric_queries/)
+do Loki.
 
-### Who wrote Prometheus?
+### Quem escreveu o Prometheus?
 
-Prometheus was initially started privately by
-[Matt T. Proud](http://www.matttproud.com) and
-[Julius Volz](http://juliusv.com). The majority of its
-initial development was sponsored by [SoundCloud](https://soundcloud.com).
+O Prometheus foi inicialmente criado de forma privada por
+[Matt T. Proud](http://www.matttproud.com) e
+[Julius Volz](http://juliusv.com).
+A maioria do seu desenvolvimento inicial foi patrocinada pela
+[SoundCloud](https://soundcloud.com).
 
-It's now maintained and extended by a wide range of [companies](https://prometheus.devstats.cncf.io/d/5/companies-table?orgId=1) and [individuals](https://prometheus.io/governance).
+Atualmente, ele é mantido e expandido por uma ampla gama de
+[empresas](https://prometheus.devstats.cncf.io/d/5/companies-table?orgId=1) e
+[pessoas](https://prometheus.io/governance).
 
-### What license is Prometheus released under?
+### Sob qual licença o Prometheus é distribuído?
 
-Prometheus is released under the
-[Apache 2.0](https://github.com/prometheus/prometheus/blob/main/LICENSE) license.
+O Prometheus é distribuído sob a licença
+[Apache 2.0](https://github.com/prometheus/prometheus/blob/main/LICENSE).
 
-### What is the plural of Prometheus?
+### Qual é o plural de Prometheus?
 
-After [extensive research](https://youtu.be/B_CDeYrqxjQ), it has been determined
-that the correct plural of 'Prometheus' is 'Prometheis'.
+Após [extensa pesquisa](https://youtu.be/B_CDeYrqxjQ), determinou-se que o
+plural correto de 'Prometheus' é 'Prometheis'.
 
-If you can not remember this, "Prometheus instances" is a good workaround.
+Se você não se lembra disso, "instâncias do Prometheus" é uma boa solução
+alternativa.
 
-### Can I reload Prometheus's configuration?
+### Posso recarregar a configuração do Prometheus?
 
-Yes, sending `SIGHUP` to the Prometheus process or an HTTP POST request to the
-`/-/reload` endpoint will reload and apply the configuration file. The
-various components attempt to handle failing changes gracefully.
+Sim, enviar um sinal `SIGHUP` para o processo do Prometheus ou uma requisição
+HTTP POST para o endpoint `/-/reload` recarregará e aplicará o arquivo de
+configuração.
+Os diversos componentes tentam lidar com falhas de forma adequada.
 
-### Can I send alerts?
+### Posso enviar alertas?
 
-Yes, with the [Alertmanager](https://github.com/prometheus/alertmanager).
+Sim, com o [Alertmanager](https://github.com/prometheus/alertmanager).
 
-We support sending alerts through [email, various native integrations](https://prometheus.io/docs/alerting/latest/configuration/), and a [webhook system anyone can add integrations to](https://prometheus.io/docs/operating/integrations/#alertmanager-webhook-receiver).
+Oferecemos suporte ao envio de alertas por
+[e-mail, diversas integrações nativas](https://prometheus.io/docs/alerting/latest/configuration/)
+e um
+[sistema de webhook ao qual qualquer pessoa pode adicionar integrações](https://prometheus.io/docs/operating/integrations/#alertmanager-webhook-receiver).
 
-### Can I create dashboards?
+### Posso criar dashboards?
 
-Yes, we recommend [Grafana](/docs/visualization/grafana/) for production
-usage. There are also [Console templates](/docs/visualization/consoles/).
+Sim, recomendamos o [Grafana](/docs/visualization/grafana/) para uso em
+produção.
 
-### Can I change the timezone? Why is everything in UTC?
+Também existem [modelos de console](/docs/visualization/consoles/).
 
-To avoid any kind of timezone confusion, especially when the so-called
-daylight saving time is involved, we decided to exclusively use Unix
-time internally and UTC for display purposes in all components of
-Prometheus. A carefully done timezone selection could be introduced
-into the UI. Contributions are welcome. See
-[issue #500](https://github.com/prometheus/prometheus/issues/500)
-for the current state of this effort.
+### Posso alterar o fuso horário? Por que tudo está em UTC?
 
-## Instrumentation
+Para evitar qualquer tipo de confusão com fusos horários, especialmente quando
+se trata do chamado horário de verão, decidimos usar exclusivamente o tempo Unix
+internamente e UTC para fins de exibição em todos os componentes do Prometheus.
+Uma seleção cuidadosa de fuso horário pode ser introduzida na interface da
+pessoa usuária.
+Contribuições são bem-vindas.
+Consulte [issue #500](https://github.com/prometheus/prometheus/issues/500) para
+o estado atual deste projeto.
 
-### Which languages have instrumentation libraries?
+## Instrumentação
 
-There are a number of client libraries for instrumenting your services with
-Prometheus metrics. See the [client libraries](/docs/instrumenting/clientlibs/)
-documentation for details.
+### Quais linguagens possuem bibliotecas de instrumentação?
 
-If you are interested in contributing a client library for a new language, see
-the [exposition formats](/docs/instrumenting/exposition_formats/).
+Existem diversas bibliotecas de cliente para instrumentar seus serviços com
+métricas do Prometheus.
+Consulte a documentação das
+[bibliotecas de cliente](/docs/instrumenting/clientlibs/) para obter detalhes.
 
-### Can I monitor machines?
+Se você estiver interessado em contribuir com uma biblioteca de cliente para uma
+nova linguagem, consulte os
+[formatos de exposição](/docs/instrumenting/exposition_formats/).
 
-Yes, the [Node Exporter](https://github.com/prometheus/node_exporter) exposes
-an extensive set of machine-level metrics on Linux and other Unix systems such
-as CPU usage, memory, disk utilization, filesystem fullness, and network
-bandwidth.
+### Posso monitorar máquinas?
 
-### Can I monitor network devices?
+Sim, o [Node Exporter](https://github.com/prometheus/node_exporter) expõe um
+extenso conjunto de métricas em nível de máquina no Linux e outros sistemas
+Unix, como uso de CPU, memória, utilização de disco, preenchimento do sistema de
+arquivos e largura de banda da rede.
 
-Yes, the [SNMP Exporter](https://github.com/prometheus/snmp_exporter) allows
-monitoring of devices that support SNMP.
-For industrial networks, there's also a [Modbus exporter](https://github.com/RichiH/modbus_exporter).
+### Posso monitorar dispositivos de rede?
 
-### Can I monitor batch jobs?
+Sim, o [SNMP Exporter](https://github.com/prometheus/snmp_exporter) permite o
+monitoramento de dispositivos que suportam SNMP.
+Para redes industriais, também existe um
+[Modbus Exporter](https://github.com/RichiH/modbus_exporter).
 
-Yes, using the [Pushgateway](/docs/instrumenting/pushing/). See also the
-[best practices](/docs/practices/instrumentation/#batch-jobs) for monitoring batch
-jobs.
+### Posso monitorar jobs em lote?
 
-### What applications can Prometheus monitor out of the box?
+Sim, usando o [Pushgateway](/docs/instrumenting/pushing/).
+Consulte também as
+[melhores práticas](/docs/practices/instrumentation/#batch-jobs) para
+monitoramento de jobs em lote.
 
-See [the list of exporters and integrations](/docs/instrumenting/exporters/).
+### Quais aplicações o Prometheus pode monitorar imediatamente?
 
-### Can I monitor JVM applications via JMX?
+Consulte
+[a lista de exportadores e integrações](/docs/instrumenting/exporters/).
 
-Yes, for applications that you cannot instrument directly with the Java client, you can use the [JMX Exporter](https://github.com/prometheus/jmx_exporter)
-either standalone or as a Java Agent.
+### Posso monitorar aplicações JVM via JMX?
 
-### What is the performance impact of instrumentation?
+Sim, para aplicações que você não pode instrumentar diretamente com o cliente
+Java, você pode usar o
+[Exportador JMX](https://github.com/prometheus/jmx_exporter) seja de forma
+independente ou como um Agente Java.
 
-Performance across client libraries and languages may vary. For Java,
+### Qual o impacto da instrumentação no desempenho?
+
+O desempenho pode variar entre diferentes bibliotecas de cliente e linguagens.
+Para Java,
 [benchmarks](https://github.com/prometheus/client_java/blob/main/benchmarks/README.md)
-indicate that incrementing a counter/gauge with the Java client will take
-12-17ns, depending on contention. This is negligible for all but the most
-latency-critical code.
+indicam que incrementar um contador/medidor com o cliente Java levará 12-17ns,
+dependendo da contenção.
+Isso é insignificante para todos os códigos, exceto os mais críticos em termos
+de latência.
 
-## Implementation
+## Implementação
 
-### Why are all sample values 64-bit floats?
+### Por que todos os valores de amostra são floats de 64 bits?
 
-We restrained ourselves to 64-bit floats to simplify the design. The
-[IEEE 754 double-precision binary floating-point
-format](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-supports integer precision for values up to 2<sup>53</sup>. Supporting
-native 64 bit integers would (only) help if you need integer precision
-above 2<sup>53</sup> but below 2<sup>63</sup>. In principle, support
-for different sample value types (including some kind of big integer,
-supporting even more than 64 bit) could be implemented, but it is not
-a priority right now. A counter, even if incremented one million times per
-second, will only run into precision issues after over 285 years.
+Nos limitamos a floats de 64 bits para simplificar o projeto.
+O
+[formato de ponto flutuante binário de dupla precisão IEEE 754](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)
+suporta precisão inteira para valores de até 2<sup>53</sup>.
+O suporte a inteiros nativos de 64 bits seria útil (apenas) se você precisasse
+de precisão inteira acima de 2<sup>53</sup>, mas abaixo de 2<sup>63</sup>.
+Em princípio, o suporte a diferentes tipos de valores de amostra (incluindo
+algum tipo de inteiro grande, suportando até mais de 64 bits) poderia ser
+implementado, mas não é uma prioridade no momento.
+Um contador, mesmo que incrementado um milhão de vezes por segundo, só
+apresentará problemas de precisão após mais de 285 anos.

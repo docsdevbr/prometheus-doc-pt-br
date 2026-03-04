@@ -11,42 +11,52 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
+source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/roadmap.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
 title: Roadmap
 sort_rank: 6
 ---
 
-The following is only a selection of some of the major features we plan to
-implement in the near future. To get a more complete overview of planned
-features and current work, see the issue trackers for the various repositories,
-for example, the [Prometheus
-server](https://github.com/prometheus/prometheus/issues).
+A seguir, apresentamos apenas uma seleção de alguns dos principais recursos que
+planejamos implementar em breve.
+Para obter uma visão geral mais completa dos recursos planejados e do trabalho
+atual, consulte os rastreadores de issues dos vários repositórios, por exemplo,
+o [servidor Prometheus](https://github.com/prometheus/prometheus/issues).
 
-### Server-side metric metadata support
+## Suporte a metadados de métricas no servidor
 
-At this time, metric types and other metadata are only used in the
-client libraries and in the exposition format, but not persisted or
-utilized in the Prometheus server. We plan on making use of this
-metadata in the future. The first step is to aggregate this data in-memory
-in Prometheus and provide it via an experimental API endpoint.
+Atualmente, os tipos de métricas e outros metadados são usados apenas nas
+bibliotecas do cliente e no formato de exposição, mas não são persistidos ou
+utilizados no servidor Prometheus.
+Planejamos utilizar esses metadados no futuro.
+O primeiro passo é agregar esses dados na memória no Prometheus e
+disponibilizá-los por meio de um endpoint de API experimental.
 
-### Adopt OpenMetrics
+## Adoção do OpenMetrics
 
-The OpenMetrics working group is developing a new standard for metric exposition.
-We plan to support this format in our client libraries and Prometheus itself.
+O grupo de trabalho OpenMetrics está desenvolvendo um novo padrão para exposição
+de métricas.
+Planejamos oferecer suporte a esse formato em nossas bibliotecas de cliente e no
+próprio Prometheus.
 
-### Retroactive rule evaluations
+## Avaliações retroativas de regras
 
-Add support for retroactive rule evaluations making use of backfill.
+Adicionar suporte para avaliações retroativas de regras usando preenchimento
+retroativo.
 
-### TLS and authentication in HTTP serving endpoints
+## TLS e autenticação em endpoints de serviço HTTP
 
-TLS and authentication are currently being rolled out to the Prometheus,
-Alertmanager, and the official exporters. Adding this support will make it
-easier for people to deploy Prometheus components securely without requiring a
-reverse proxy to add those features externally.
+O TLS e a autenticação estão sendo implementados gradualmente no Prometheus,
+Alertmanager e nos exportadores oficiais.
+Adicionar esse suporte tornará mais fácil para as pessoas implantarem
+componentes do Prometheus com segurança, sem a necessidade de um proxy reverso
+para adicionar esses recursos externamente.
 
-### Support the Ecosystem
+## Suporte ao ecossistema
 
-Prometheus has a range of client libraries and exporters. There are always more
-languages that could be supported, or systems that would be useful to export
-metrics from. We will support the ecosystem in creating and expanding these.
+O Prometheus possui uma variedade de bibliotecas de clientes e exportadores.
+Sempre há mais linguagens que poderiam ser suportadas ou sistemas dos quais
+seria útil exportar métricas.
+Apoiaremos o ecossistema na criação e expansão desses recursos.

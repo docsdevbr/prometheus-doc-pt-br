@@ -11,122 +11,141 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Metric types
+source_url: https://github.com/prometheus/docs/blob/main/docs/concepts/metric_types.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Tipos de métricas
 sort_rank: 2
 ---
 
-The Prometheus client libraries offer four core metric types. These are
-currently only differentiated in the client libraries (to enable APIs tailored
-to the usage of the specific types) and in the wire protocol. The Prometheus
-server does not yet make use of the type information and flattens all data into
-untyped time series. This may change in the future.
+As bibliotecas de cliente Prometheus oferecem quatro tipos de métricas
+principais.
+Elas são atualmente diferenciadas apenas nas bibliotecas de cliente (para
+permitir APIs adaptadas ao uso dos tipos específicos) e no protocolo de
+comunicação.
+O servidor Prometheus ainda não utiliza as informações de tipo e transforma
+todos os dados em séries temporais sem tipo.
+Isso pode mudar no futuro.
 
 ## Counter
 
-A _counter_ is a cumulative metric that represents a single [monotonically
-increasing counter](https://en.wikipedia.org/wiki/Monotonic_function) whose
-value can only increase or be reset to zero on restart. For example, you can
-use a counter to represent the number of requests served, tasks completed, or
-errors.
+Um _counter_ (contador, em português) é uma métrica cumulativa que representa um
+único [counter monotonicamente crescente](https://en.wikipedia.org/wiki/Monotonic_function),
+cujo valor só pode aumentar ou ser zerado na reinicialização.
+Por exemplo, você pode usar um counter para representar o número de requisições
+atendidas, tarefas concluídas ou erros.
 
-Do not use a counter to expose a value that can decrease. For example, do not
-use a counter for the number of currently running processes; instead use a gauge.
+Não use um counter para expor um valor que pode diminuir.
+Por exemplo, não use um counter para o número de processos em execução; em vez
+disso, use um gauge.
 
-Client library usage documentation for counters:
+Documentação de uso da biblioteca cliente para counters:
 
-   * [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Counter)
-   * [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#counter)
-   * [Python](https://prometheus.github.io/client_python/instrumenting/counter/)
-   * [Ruby](https://github.com/prometheus/client_ruby#counter)
-   * [.Net](https://github.com/prometheus-net/prometheus-net#counters)
-   * [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/counter/index.html)
+- [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Counter)
+- [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#counter)
+- [Python](https://prometheus.github.io/client_python/instrumenting/counter/)
+- [Ruby](https://github.com/prometheus/client_ruby#counter)
+- [.Net](https://github.com/prometheus-net/prometheus-net#counters)
+- [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/counter/index.html)
 
 ## Gauge
 
-A _gauge_ is a metric that represents a single numerical value that can
-arbitrarily go up and down.
+Um _gauge_ (medidor, em português) é uma métrica que representa um único valor
+numérico que pode subir e descer arbitrariamente.
 
-Gauges are typically used for measured values like temperatures or current
-memory usage, but also "counts" that can go up and down, like the number of
-concurrent requests.
+Os gauges são normalmente usados para valores medidos, como temperaturas ou uso
+atual de memória, mas também para "contagens" que podem subir e descer, como o
+número de requisições simultâneas.
 
-Client library usage documentation for gauges:
+Documentação de uso da biblioteca cliente para gauges:
 
-   * [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Gauge)
-   * [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#gauge)
-   * [Python](https://prometheus.github.io/client_python/instrumenting/gauge/)
-   * [Ruby](https://github.com/prometheus/client_ruby#gauge)
-   * [.Net](https://github.com/prometheus-net/prometheus-net#gauges)
-   * [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/gauge/index.html)
+- [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Gauge)
+- [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#gauge)
+- [Python](https://prometheus.github.io/client_python/instrumenting/gauge/)
+- [Ruby](https://github.com/prometheus/client_ruby#gauge)
+- [.Net](https://github.com/prometheus-net/prometheus-net#gauges)
+- [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/gauge/index.html)
 
 ## Histogram
 
-A _histogram_ samples observations (usually things like request durations or
-response sizes) and counts them in configurable buckets. It also provides a sum
-of all observed values.
+Um _histogram_ (histograma, em português) amostra observações (geralmente coisas
+como a duração das requisições ou tamanhos de resposta) e os conta em intervalos
+configuráveis.
+Também fornece a soma de todos os valores observados.
 
-A histogram with a base metric name of `<basename>` exposes multiple time series
-during a scrape:
+Um histogram com um nome de métrica base `<basename>` expõe várias séries
+temporais durante uma coleta:
 
-  * cumulative counters for the observation buckets, exposed as `<basename>_bucket{le="<upper inclusive bound>"}`
-  * the **total sum** of all observed values, exposed as `<basename>_sum`
-  * the **count** of events that have been observed, exposed as `<basename>_count` (identical to `<basename>_bucket{le="+Inf"}` above)
+- Counters cumulativos para os intervalos de observação, expostos como
+  `<basename>_bucket{le="<limite superior inclusivo>"}`.
+- A **soma total** de todos os valores observados, exposta como
+  `<basename>_sum`.
+- A **contagem** de eventos observados, exposta como `<basename>_count`
+  (idêntico a `<basename>_bucket{le="+Inf"}` acima).
 
-Use the
-[`histogram_quantile()` function](/docs/prometheus/latest/querying/functions/#histogram_quantile)
-to calculate quantiles from histograms or even aggregations of histograms. A
-histogram is also suitable to calculate an
-[Apdex score](http://en.wikipedia.org/wiki/Apdex). When operating on buckets,
-remember that the histogram is
-[cumulative](https://en.wikipedia.org/wiki/Histogram#Cumulative_histogram). See
-[histograms and summaries](/docs/practices/histograms) for details of histogram
-usage and differences to [summaries](#summary).
+Use a
+[função `histogram_quantile()`](/docs/prometheus/latest/querying/functions/#histogram_quantile)
+para calcular quantis a partir de histograms ou mesmo agregações de histograms.
+Um histogram também é adequado para calcular uma
+[pontuação Apdex](http://en.wikipedia.org/wiki/Apdex).
+Ao operar com intervalos (buckets), lembre-se de que o histogram é
+[cumulativo](https://en.wikipedia.org/wiki/Histogram#Cumulative_histogram).
+Consulte [histograms e summaries](/docs/practices/histograms) para obter
+detalhes sobre o uso de histograms e as diferenças em relação aos
+[summaries](#summary).
 
-NOTE: Beginning with Prometheus v2.40, there is experimental support for native
-histograms. A native histogram requires only one time series, which includes a
-dynamic number of buckets in addition to the sum and count of
-observations. Native histograms allow much higher resolution at a fraction of
-the cost. Detailed documentation will follow once native histograms are closer
-to becoming a stable feature.
+NOTA: A partir do Prometheus v2.40, há suporte experimental para histograms
+nativos.
+Um histogram nativo requer apenas uma série temporal, que inclui um número
+dinâmico de intervalos (buckets), além da soma e da contagem de observações.
+Os histograms nativos permitem uma resolução muito maior a uma fração do custo.
+A documentação detalhada será disponibilizada assim que os histograms nativos
+estiverem mais próximos de se tornarem um recurso estável.
 
-NOTE: Beginning with Prometheus v3.0, the values of the `le` label of classic
-histograms are normalized during ingestion to follow the format of
-[OpenMetrics Canonical Numbers](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
+NOTA: A partir do Prometheus v3.0, os valores do rótulo `le` dos histograms
+clássicos são normalizados durante a ingestão para seguir o formato dos
+[Números Canônicos do OpenMetrics](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
 
-Client library usage documentation for histograms:
+Documentação de uso da biblioteca cliente para histograms:
 
-   * [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Histogram)
-   * [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#histogram)
-   * [Python](https://prometheus.github.io/client_python/instrumenting/histogram/)
-   * [Ruby](https://github.com/prometheus/client_ruby#histogram)
-   * [.Net](https://github.com/prometheus-net/prometheus-net#histogram)
-   * [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/histogram/index.html)
+- [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Histogram)
+- [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#histogram)
+- [Python](https://prometheus.github.io/client_python/instrumenting/histogram/)
+- [Ruby](https://github.com/prometheus/client_ruby#histogram)
+- [.Net](https://github.com/prometheus-net/prometheus-net#histogram)
+- [Rust](https://docs.rs/prometheus-client/latest/prometheus_client/metrics/histogram/index.html)
 
 ## Summary
 
-Similar to a _histogram_, a _summary_ samples observations (usually things like
-request durations and response sizes). While it also provides a total count of
-observations and a sum of all observed values, it calculates configurable
-quantiles over a sliding time window.
+Semelhante a um _histogram_, um _summary_ (resumo, em português) amostra
+observações (geralmente coisas como duração de requisições e tamanhos de
+respostas).
+Embora também forneça uma contagem total de observações e uma soma de todos os
+valores observados, ele calcula quantis configuráveis em uma janela de tempo
+deslizante.
 
-A summary with a base metric name of `<basename>` exposes multiple time series
-during a scrape:
+Um summary com um nome de métrica base `<basename>` expõe várias séries
+temporais durante uma coleta:
 
-  * streaming **φ-quantiles** (0 ≤ φ ≤ 1) of observed events, exposed as `<basename>{quantile="<φ>"}`
-  * the **total sum** of all observed values, exposed as `<basename>_sum`
-  * the **count** of events that have been observed, exposed as `<basename>_count`
+- **Quantis-φ** em fluxo contínuo (0 ≤ φ ≤ 1) de eventos observados, expostos
+  como `<basename>{quantile="<φ>"}`.
+- A **soma total** de todos os valores observados, exposta como
+  `<basename>_sum`.
+- A **contagem** de eventos observados, exposta como `<basename>_count`.
 
-See [histograms and summaries](/docs/practices/histograms) for
-detailed explanations of φ-quantiles, summary usage, and differences
-to [histograms](#histogram).
+Consulte [histograms e summaries](/docs/practices/histograms) para explicações
+detalhadas sobre quantis-φ, uso de summary e diferenças em relação a
+[histograms](#histogram).
 
-NOTE: Beginning with Prometheus v3.0, the values of the `quantile` label are normalized during
-ingestion to follow the format of [OpenMetrics Canonical Numbers](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
+NOTA: A partir do Prometheus v3.0, os valores do rótulo `quantile` são
+normalizados durante a ingestão para seguir o formato dos
+[Números Canônicos do OpenMetrics](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
 
-Client library usage documentation for summaries:
+Documentação de uso da biblioteca cliente para summaries:
 
-   * [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Summary)
-   * [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#summary)
-   * [Python](https://prometheus.github.io/client_python/instrumenting/summary/)
-   * [Ruby](https://github.com/prometheus/client_ruby#summary)
-   * [.Net](https://github.com/prometheus-net/prometheus-net#summary)
+- [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Summary)
+- [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#summary)
+- [Python](https://prometheus.github.io/client_python/instrumenting/summary/)
+- [Ruby](https://github.com/prometheus/client_ruby#summary)
+- [.Net](https://github.com/prometheus-net/prometheus-net#summary)

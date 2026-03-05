@@ -11,7 +11,11 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Concepts
+source_url: https://github.com/prometheus/docs/blob/main/docs/concepts/index.md
+revision: 90504ed63803aa17f8a9fab67bde21364f880fc2
+status: ready
+
+title: Conceitos
 sort_rank: 2
 nav_icon: flask
 ---

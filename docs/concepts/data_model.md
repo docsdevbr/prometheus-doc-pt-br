@@ -11,71 +11,106 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://creativecommons.org/licenses/by/4.0/
 
-title: Data model
+source_url: https://github.com/prometheus/docs/blob/main/docs/concepts/data_model.md
+revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+status: ready
+
+title: Modelo de dados
 sort_rank: 1
 ---
 
-Prometheus fundamentally stores all data as [_time
-series_](http://en.wikipedia.org/wiki/Time_series): streams of timestamped
-values belonging to the same metric and the same set of labeled dimensions.
-Besides stored time series, Prometheus may generate temporary derived time series
-as the result of queries.
+O Prometheus armazena fundamentalmente todos os dados como
+[_séries temporais_](http://en.wikipedia.org/wiki/Time_series): fluxos de
+valores com timestamp pertencentes à mesma métrica e ao mesmo conjunto de
+dimensões rotuladas.
+Além das séries temporais armazenadas, o Prometheus pode gerar séries temporais
+derivadas temporárias como resultado de consultas.
 
-## Metric names and labels
+## Nomes e rótulos de métricas
 
-Every time series is uniquely identified by its metric name and optional key-value pairs called labels.
+Cada série temporal é identificada exclusivamente pelo nome da métrica e por
+pares de chave-valor opcionais chamados rótulos.
 
-***Metric names:***
+***Nomes de métricas:***
 
-* Metric names SHOULD specify the general feature of a system that is measured (e.g. `http_requests_total` - the total number of HTTP requests received).
-* Metric names MAY use any UTF-8 characters.
-* Metric names SHOULD match the regex `[a-zA-Z_:][a-zA-Z0-9_:]*` for the best experience and compatibility (see the warning below). Metric names outside of that set will require quoting e.g. when used in PromQL (see the [UTF-8 guide](../guides/utf8.md#querying)).
+- Os nomes das métricas DEVEM especificar a característica geral de um sistema
+  que está sendo medida (por exemplo, `http_requests_total` - o número total de
+  requisições HTTP recebidas).
+- Os nomes das métricas PODEM usar quaisquer caracteres UTF-8.
+- Os nomes das métricas DEVEM corresponder à expressão regular
+  `[a-zA-Z_:][a-zA-Z0-9_:]*` para melhor experiência e compatibilidade (consulte
+  o alerta abaixo).
+  Nomes de métricas fora desse conjunto exigirão o uso de aspas, por exemplo,
+  quando usados em PromQL (consulte o [guia UTF-8](../guides/utf8.md#querying)).
 
-NOTE: Colons (':') are reserved for user-defined recording rules. They SHOULD NOT be used by exporters or direct instrumentation.
+NOTA: Dois pontos (':') são reservados para regras de gravação definidas pela
+pessoa usuária.
+Eles NÃO DEVEM ser usados por exportadores ou instrumentação direta.
 
-***Metric labels:***
+***Rótulos de métricas:***
 
-Labels let you capture different instances of the same metric name. For example: all HTTP requests that used the method `POST` to the `/api/tracks` handler. We refer to this as Prometheus's "dimensional data model". The query language allows filtering and aggregation based on these dimensions. The change of any label's value, including adding or removing labels, will create a new time series.
+Os rótulos permitem capturar diferentes instâncias do mesmo nome de métrica.
+Por exemplo: todas as requisições HTTP que usaram o método `POST` para o
+manipulador `/api/tracks`.
+Referimo-nos a isso como o "modelo de dados dimensional" do Prometheus.
+A linguagem de consulta permite filtragem e agregação com base nessas dimensões.
+A alteração do valor de qualquer rótulo, incluindo a adição ou remoção de
+rótulos, criará uma nova série temporal.
 
-* Label names MAY use any UTF-8 characters.
-* Label names beginning with `__` (two underscores) MUST be reserved for internal Prometheus use.
-* Label names SHOULD match the regex `[a-zA-Z_][a-zA-Z0-9_]*` for the best experience and compatibility (see the warning below). Label names outside of that regex will require quoting e.g. when used in PromQL (see the [UTF-8 guide](../guides/utf8.md#querying)).
-* Label values MAY contain any UTF-8 characters.
-* Labels with an empty label value are considered equivalent to labels that do not exist.
+- Os nomes dos rótulos PODEM usar quaisquer caracteres UTF-8.
+- Os nomes dos rótulos que começam com `__` (dois sublinhados) DEVEM ser
+  reservados para uso interno do Prometheus.
+- Os nomes dos rótulos DEVEM corresponder à expressão regular
+  `[a-zA-Z_][a-zA-Z0-9_]*` para melhor experiência e compatibilidade (consulte o
+  alerta abaixo).
+  Nomes de rótulos fora dessa expressão regular precisarão ser colocados entre
+  aspas, por exemplo: Quando usado em PromQL (consulte o
+  [guia UTF-8](../guides/utf8.md#querying)).
+- Os valores dos rótulos PODEM conter quaisquer caracteres UTF-8.
+- Rótulos com um valor vazio são considerados equivalentes a rótulos
+  inexistentes.
 
-WARNING: The [UTF-8](../guides/utf8.md) support for metric and label names was added relatively recently in Prometheus v3.0.0. It might take time for the wider ecosystem (downstream PromQL compatible projects and vendors, tooling, third-party instrumentation, collectors, etc.) to adopt new quoting mechanisms, relaxed validation etc. For the best compatibility it's recommended to stick to the recommended ("SHOULD") character set.
+ALERTA: O suporte a [UTF-8](../guides/utf8.md) para nomes de métricas e rótulos
+foi adicionado recentemente no Prometheus v3.0.0.
+Pode levar algum tempo para que o ecossistema mais amplo (projetos e
+fornecedores compatíveis com PromQL, ferramentas, instrumentação de terceiros,
+coletores, etc.) adote novos mecanismos de citação, validação flexível, etc.
+Para melhor compatibilidade, recomenda-se usar o conjunto de caracteres
+recomendado ("DEVE").
 
-INFO: See also the [best practices for naming metrics and labels](/docs/practices/naming/).
+INFORMAÇÃO: Consulte também as
+[melhores práticas para nomear métricas e rótulos](/docs/practices/naming/).
 
-## Samples
+## Amostras
 
-Samples form the actual time series data. Each sample consists of:
+As amostras formam os dados reais da série temporal.
+Cada amostra consiste em:
 
-* a float64 or [native histogram](https://prometheus.io/docs/specs/native_histograms/) value
-* a millisecond-precision timestamp
+- Um valor float64 ou um
+  [histograma nativo](https://prometheus.io/docs/specs/native_histograms/).
+- Um timestamp com precisão de milissegundos.
 
-## Notation
+## Notação
 
-Given a metric name and a set of labels, time series are frequently identified
-using this notation:
+Dado um nome de métrica e um conjunto de rótulos, as séries temporais são
+frequentemente identificadas usando esta notação:
 
-    <metric name>{<label name>="<label value>", ...}
+    <nome da métrica>{<nome do rótulo>="<valor do rótulo>", ...}
 
-For example, a time series with the metric name `api_http_requests_total` and
-the labels `method="POST"` and `handler="/messages"` could be written like
-this:
+Por exemplo, uma série temporal com o nome da métrica `api_http_requests_total`
+e os rótulos `method="POST"` e `handler="/messages"` poderia ser escrita assim:
 
     api_http_requests_total{method="POST", handler="/messages"}
 
-This is the same notation that [OpenTSDB](http://opentsdb.net/) uses.
+Esta é a mesma notação usada pelo [OpenTSDB](http://opentsdb.net/).
 
-Names with UTF-8 characters outside the recommended set must be quoted, using
-this notation:
+Nomes com caracteres UTF-8 fora do conjunto recomendado devem ser colocados
+entre aspas, usando a seguinte notação:
 
-    {"<metric name>", <label name>="<label value>", ...}
+    {"<nome da métrica>", <nome do rótulo>="<valor do rótulo>", ...}
 
-Since metric name are internally represented as a label pair
-with a special label name (`__name__="<metric name>"`) one could also use the following notation:
+Como os nomes das métricas são representados internamente como um par de rótulos
+com um nome de rótulo especial (`__name__="<nome da métrica>"`), também é
+possível usar a seguinte notação:
 
-    {__name__="<metric name>", <label name>="<label value>", ...}
-
+    {__name__="<nome da métrica>", <nome do rótulo>="<valor do rótulo>", ...}

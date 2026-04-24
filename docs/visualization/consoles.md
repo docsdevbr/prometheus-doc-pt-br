@@ -1,6 +1,6 @@
 ---
-# Copyright (c) 2014-2026 The Prometheus Authors.
-# Copyright (c) 2026 The Linux Foundation. All rights reserved.
+# SPDX-FileCopyrightText: 2014-2026 The Prometheus Authors.
+# SPDX-FileCopyrightText: 2026 The Linux Foundation. All rights reserved.
 # The Linux Foundation has registered trademarks and uses trademarks.
 # For a list of trademarks of The Linux Foundation, please see the Trademark
 # Usage page.

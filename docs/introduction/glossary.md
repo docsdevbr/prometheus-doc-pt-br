@@ -6,10 +6,10 @@
 # Usage page.
 # https://www.linuxfoundation.org/trademark-usage
 #
-# Documentation licensed under the Creative Commons Attribution 4.0
-# International License.
+# SPDX-License-Identifier: Apache-2.0
+# Documentation licensed under the Apache License, Version 2.0.
 # The original work was translated from English into Brazilian Portuguese.
-# https://creativecommons.org/licenses/by/4.0/
+# https://github.com/docsdevbr/prometheus-doc-pt-br/blob/-/LICENSES/Apache-2.0.txt
 
 source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/glossary.md
 revision: f2dfa4b406ac54709829fd1411578fed8d969eec

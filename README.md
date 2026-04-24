@@ -2,7 +2,7 @@
 
 [![Arquivo README em inglês][badge-readme-en]][readme-en]
 [![Arquivo README em português brasileiro][badge-readme-pt-br]][readme-pt-br]
-[![Licença: CC-BY-4.0][badge-license]][license]
+[![Licença: Apache-2.0][badge-license]][license]
 [![Pessoas contribuidoras][badge-contributors]][contributors]
 [![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
@@ -33,15 +33,14 @@ A Linux Foundation possui marcas registradas e usa marcas registradas.<br/>
 Para uma lista de marcas registradas da Linux Foundation, consulte a página
 [Trademark Usage][trademark-usage].
 
-Documentação licenciada sob a
-[Licença Creative Commons Atribuição 4.0 Internacional][license].<br/>
+Documentação licenciada sob a [Licença Apache, Versão 2.0][license].<br/>
 A obra original foi traduzida do inglês para o português brasileiro.
 
 [badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/prometheus-doc-pt-br
 
 [badge-github-sponsors]: https://img.shields.io/github/sponsors/docsdevbr
 
-[badge-license]: https://img.shields.io/badge/license-CC--BY--4.0-green
+[badge-license]: https://img.shields.io/badge/license-Apache--2.0-blue
 
 [badge-readme-en]: https://img.shields.io/badge/lang-en-blue
 
@@ -55,7 +54,7 @@ A obra original foi traduzida do inglês para o português brasileiro.
 
 [github-sponsors]: https://github.com/sponsors/docsdevbr
 
-[license]: https://creativecommons.org/licenses/by/4.0/deed.pt-br
+[license]: LICENSES/Apache-2.0.txt
 
 [page]: https://pt.docs.dev.br/tech/p/prometheus/index.html
 

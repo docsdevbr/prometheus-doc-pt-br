@@ -2,7 +2,7 @@
 
 [![README file in English][badge-readme-en]][readme-en]
 [![README file in Brazilian Portuguese][badge-readme-pt-br]][readme-pt-br]
-[![License: CC-BY-4.0][badge-license]][license]
+[![License: Apache-2.0][badge-license]][license]
 [![Contributors][badge-contributors]][contributors]
 [![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
@@ -33,15 +33,14 @@ The Linux Foundation has registered trademarks and uses trademarks.<br/>
 For a list of trademarks of The Linux Foundation, please see the
 [Trademark Usage][trademark-usage] page.
 
-Documentation licensed under the
-[Creative Commons Attribution 4.0 International License][license].<br/>
+Documentation licensed under the [Apache License, Version 2.0][license].<br/>
 The original work was translated from English into Brazilian Portuguese.
 
 [badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/prometheus-doc-pt-br
 
 [badge-github-sponsors]: https://img.shields.io/github/sponsors/docsdevbr
 
-[badge-license]: https://img.shields.io/badge/license-CC--BY--4.0-green
+[badge-license]: https://img.shields.io/badge/license-Apache--2.0-blue
 
 [badge-readme-en]: https://img.shields.io/badge/lang-en-blue
 
@@ -55,7 +54,7 @@ The original work was translated from English into Brazilian Portuguese.
 
 [github-sponsors]: https://github.com/sponsors/docsdevbr
 
-[license]: https://creativecommons.org/licenses/by/4.0/
+[license]: LICENSES/Apache-2.0.txt
 
 [page]: https://pt.docs.dev.br/tech/p/prometheus/index.html
 

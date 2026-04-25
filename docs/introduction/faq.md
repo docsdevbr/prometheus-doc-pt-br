@@ -12,7 +12,7 @@
 # https://github.com/docsdevbr/prometheus-doc-pt-br/blob/-/LICENSES/Apache-2.0.txt
 
 source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/faq.md
-revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+revision: d2f18e7c31c0d316fff94230149e6135fe082565
 status: ready
 
 title: Perguntas frequentes

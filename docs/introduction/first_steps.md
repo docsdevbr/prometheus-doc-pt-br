@@ -12,7 +12,7 @@
 # https://github.com/docsdevbr/prometheus-doc-pt-br/blob/-/LICENSES/Apache-2.0.txt
 
 source_url: https://github.com/prometheus/docs/blob/main/docs/introduction/first_steps.md
-revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+revision: 611089c1ea65f373a638333b966534a65564e167
 status: ready
 
 title: Primeiros passos com o Prometheus
@@ -139,7 +139,7 @@ acessando seu próprio endpoint de métricas: http://localhost:9090/metrics.
 
 Vamos analisar alguns dados que o Prometheus coletou sobre si.
 Para usar o navegador de expressões integrado do Prometheus, acesse
-http://localhost:9090/graph e escolha a visualização "Table" na guia "Graph".
+http://localhost:9090/query e escolha a guia "Table".
 
 Como você pode ver em http://localhost:9090/metrics, uma métrica que o
 Prometheus exporta sobre si é chamada `promhttp_metric_handler_requests_total`
@@ -173,7 +173,7 @@ Para mais informações sobre a linguagem de expressões, consulte a
 
 ## Usando a interface de gráficos
 
-Para gerar gráficos de expressões, acesse http://localhost:9090/graph e use a
+Para gerar gráficos de expressões, acesse http://localhost:9090/query e use a
 guia "Graph".
 
 Por exemplo, insira a seguinte expressão para gerar um gráfico da taxa de

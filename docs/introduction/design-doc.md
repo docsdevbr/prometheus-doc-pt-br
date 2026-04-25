@@ -35,8 +35,8 @@ não como algo concreto ou específico.
 
 | Documento                                                                                                                                    | Data inicial |
 |----------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| [Prometheus não está completo em termos de funcionalidades](https://docs.google.com/document/d/1lEP7pGYM2-5GT9fAIDqrOecG86VRU8-1qAV8b6xZ29Q) | 2020-05      |
-| [Considerações sobre timestamps e durações em PromQL](https://docs.google.com/document/d/1jMeDsLvDfO92Qnry_JLAXalvMRzMSB1sBr9V7LolpYM)       | 2020-10      |
-| [Prometheus, OpenMetrics e OTLP](https://docs.google.com/document/d/1hn-u6WKLHxIsqYT1_u6eh94lyQeXrFaAouMshJcQFXs)                            | 2021-03      |
-| [Histogramas esparsos do Prometheus e PromQL](https://docs.google.com/document/d/1ch6ru8GKg03N02jRjYriurt-CZqUVY09evPg6yKTA1s/edit)          | 2021-10      |
-| [Citando nomes do Prometheus](https://docs.google.com/document/d/1yFj5QSd1AgCYecZ9EJ8f2t4OgF2KBZgJYVde-uzVEtI/edit)                          | 2023-01      |
+| [Prometheus não está completo em termos de funcionalidades](https://docs.google.com/document/d/1lEP7pGYM2-5GT9fAIDqrOecG86VRU8-1qAV8b6xZ29Q) | 05/2020      |
+| [Considerações sobre timestamps e durações em PromQL](https://docs.google.com/document/d/1jMeDsLvDfO92Qnry_JLAXalvMRzMSB1sBr9V7LolpYM)       | 10/2020      |
+| [Prometheus, OpenMetrics e OTLP](https://docs.google.com/document/d/1hn-u6WKLHxIsqYT1_u6eh94lyQeXrFaAouMshJcQFXs)                            | 03/2021      |
+| [Histogramas esparsos do Prometheus e PromQL](https://docs.google.com/document/d/1ch6ru8GKg03N02jRjYriurt-CZqUVY09evPg6yKTA1s/edit)          | 10/2021      |
+| [Citando nomes do Prometheus](https://docs.google.com/document/d/1yFj5QSd1AgCYecZ9EJ8f2t4OgF2KBZgJYVde-uzVEtI/edit)                          | 01/2023      |

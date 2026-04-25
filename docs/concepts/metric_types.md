@@ -12,26 +12,31 @@
 # https://github.com/docsdevbr/prometheus-doc-pt-br/blob/-/LICENSES/Apache-2.0.txt
 
 source_url: https://github.com/prometheus/docs/blob/main/docs/concepts/metric_types.md
-revision: 8bdb919e820ad27adc12fc66daf38531c3d9a801
+revision: 4933d0570cfd4cb44f1686cf63df5c0482594349
 status: ready
 
 title: Tipos de métricas
 sort_rank: 2
 ---
 
-As bibliotecas de cliente Prometheus oferecem quatro tipos de métricas
+As bibliotecas de instrumentação do Prometheus oferecem quatro tipos de métricas
 principais.
-Elas são atualmente diferenciadas apenas nas bibliotecas de cliente (para
-permitir APIs adaptadas ao uso dos tipos específicos) e no protocolo de
-comunicação.
-O servidor Prometheus ainda não utiliza as informações de tipo e transforma
-todos os dados em séries temporais sem tipo.
-Isso pode mudar no futuro.
+Com exceção dos histogramas nativos, estes são atualmente diferenciados apenas
+nas APIs das bibliotecas de instrumentação e nos protocolos de exposição.
+O servidor Prometheus ainda não faz uso das informações de tipo e transforma
+todos os tipos, exceto histogramas nativos, em séries temporais não tipadas de
+valores de ponto flutuante.
+Histogramas nativos, no entanto, são ingeridos como séries temporais de amostras
+de histogramas compostos especiais.
+No futuro, o Prometheus também poderá lidar com outros tipos de métricas como
+[tipos compostos](/blog/2026/02/14/modernizing-prometheus-composite-samples/).
+Há também trabalho em andamento para persistir as informações de tipo das
+amostras simples de ponto flutuante.
 
 ## Counter
 
-Um _counter_ (contador, em português) é uma métrica cumulativa que representa um
-único [counter monotonicamente crescente](https://en.wikipedia.org/wiki/Monotonic_function),
+Um _counter_ (contador) é uma métrica cumulativa que representa um único
+[counter monotonicamente crescente](https://en.wikipedia.org/wiki/Monotonic_function),
 cujo valor só pode aumentar ou ser zerado na reinicialização.
 Por exemplo, você pode usar um counter para representar o número de requisições
 atendidas, tarefas concluídas ou erros.
@@ -40,7 +45,7 @@ Não use um counter para expor um valor que pode diminuir.
 Por exemplo, não use um counter para o número de processos em execução; em vez
 disso, use um gauge.
 
-Documentação de uso da biblioteca cliente para counters:
+Documentação de uso da biblioteca de instrumentação para counters:
 
 - [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Counter)
 - [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#counter)
@@ -51,14 +56,14 @@ Documentação de uso da biblioteca cliente para counters:
 
 ## Gauge
 
-Um _gauge_ (medidor, em português) é uma métrica que representa um único valor
-numérico que pode subir e descer arbitrariamente.
+Um _gauge_ (medidor) é uma métrica que representa um único valor numérico que
+pode subir e descer arbitrariamente.
 
 Os gauges são normalmente usados para valores medidos, como temperaturas ou uso
 atual de memória, mas também para "contagens" que podem subir e descer, como o
 número de requisições simultâneas.
 
-Documentação de uso da biblioteca cliente para gauges:
+Documentação de uso da biblioteca de instrumentação para gauges:
 
 - [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Gauge)
 - [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#gauge)
@@ -69,45 +74,100 @@ Documentação de uso da biblioteca cliente para gauges:
 
 ## Histogram
 
-Um _histogram_ (histograma, em português) amostra observações (geralmente coisas
-como a duração das requisições ou tamanhos de resposta) e os conta em intervalos
-configuráveis.
-Também fornece a soma de todos os valores observados.
+Um _histogram_ (histograma) registra observações (geralmente coisas como
+durações de requisições ou tamanhos de respostas) contando-as em buckets
+(intervalos) configuráveis.
+Ele também fornece a soma de todos os valores observados.
+Como tal, um histograma é essencialmente um counter agrupado.
+No entanto, um histograma também pode representar o estado atual de uma
+distribuição, caso em que é chamado de _gauge histogram_.
+Ao contrário dos histogramas comuns do tipo counter, gauge histograms são
+raramente expostos diretamente por programas instrumentados e, portanto, não são
+(ainda) usáveis em bibliotecas de instrumentação, mas são representados em
+versões mais recentes do formato de exposição protobuf e no
+[OpenMetrics](https://openmetrics.io/).
+Eles também são criados regularmente por expressões PromQL.
+Por exemplo, o resultado da aplicação da função `rate` a um counter histogram é
+um gauge histogram, da mesma forma que o resultado da aplicação da função `rate`
+a um counter é um gauge.
 
-Um histogram com um nome de métrica base `<basename>` expõe várias séries
-temporais durante uma coleta:
+Histogramas existem em duas versões fundamentalmente diferentes: os mais
+recentes _histogramas nativos_ e os mais antigos _histogramas clássicos_.
 
-- Counters cumulativos para os intervalos de observação, expostos como
+Um histograma nativo é exposto e ingerido como amostras compostas, onde cada
+amostra representa a contagem e a soma das observações juntamente com um
+conjunto dinâmico de buckets.
+
+Um histograma clássico, no entanto, consiste em múltiplas séries temporais de
+amostras simples de ponto flutuante.
+Um histograma clássico com um nome de métrica base `<basename>` resulta na
+seguinte série temporal:
+
+- Counters cumulativos para os buckets de observação, expostos como
   `<basename>_bucket{le="<limite superior inclusivo>"}`.
 - A **soma total** de todos os valores observados, exposta como
   `<basename>_sum`.
 - A **contagem** de eventos observados, exposta como `<basename>_count`
-  (idêntico a `<basename>_bucket{le="+Inf"}` acima).
+  (idêntica a `<basename>_bucket{le="+Inf"}` acima).
 
-Use a
-[função `histogram_quantile()`](/docs/prometheus/latest/querying/functions/#histogram_quantile)
-para calcular quantis a partir de histograms ou mesmo agregações de histograms.
-Um histogram também é adequado para calcular uma
-[pontuação Apdex](http://en.wikipedia.org/wiki/Apdex).
-Ao operar com intervalos (buckets), lembre-se de que o histogram é
-[cumulativo](https://en.wikipedia.org/wiki/Histogram#Cumulative_histogram).
+Histogramas nativos são geralmente muito mais eficientes do que histogramas
+clássicos, permitem uma resolução muito maior, não exigem configuração explícita
+de limites de buckets durante a instrumentação e fornecem atomicidade quando
+transferidos pela rede (por exemplo, via protocolo de gravação remota do
+Prometheus, onde histogramas clássicos sofrem com possível transferência parcial
+porque suas séries temporais constituintes são transferidas independentemente).
+Seu esquema de agrupamento garante que eles sejam sempre agregáveis entre si,
+mesmo que a resolução possa ter mudado, enquanto histogramas clássicos com
+limites de buckets diferentes não são geralmente agregáveis.
+Se a biblioteca de instrumentação que você está usando suporta histogramas
+nativos (atualmente, este é o caso para Go e Java), você provavelmente deve
+[preferir histogramas nativos em vez de histogramas clássicos](/docs/practices/histograms).
+
+Se você tiver que usar histogramas clássicos por algum motivo, existe uma
+maneira de obter pelo menos alguns dos benefícios dos histogramas nativos: você
+pode configurar o Prometheus para ingerir histogramas clássicos em uma forma
+especial de histogramas nativos, chamados de Histogramas Nativos com Limites de
+Bucket Personalizados (NHCB).
+Os NHCBs são armazenados como as mesmas amostras compostas que os histogramas
+nativos comuns, proporcionando maior eficiência e transferências de rede
+atômicas, semelhantes aos histogramas nativos regulares.
+No entanto, os buckets dos NHCBs ainda têm o mesmo layout que em suas
+contrapartes clássicas, configurados estaticamente durante a instrumentação, com
+a mesma resolução e intervalo limitados e os mesmos problemas de agregabilidade
+ao alterar os limites dos buckets.
+
+Use a função
+[`histogram_quantile()`](/docs/prometheus/latest/querying/functions/#histogram_quantile)
+para calcular quantis a partir de histogramas ou mesmo agregações de
+histogramas.
+Ela funciona tanto para histogramas clássicos quanto nativos, usando uma sintaxe
+ligeiramente diferente.
+Os histogramas também são adequados para calcular um
+[score Apdex](http://en.wikipedia.org/wiki/Apdex).
+
+Você pode operar diretamente nos buckets de um histograma clássico, pois eles
+são representados como séries individuais
+(chamadas `<basename>_bucket{le="<limite superior inclusivo>"}`, conforme
+descrito acima).
+Lembre-se, no entanto, que esses buckets são
+[cumulativos](https://en.wikipedia.org/wiki/Histogram#Cumulative_histogram), ou
+seja, cada bucket conta todas as observações menores ou iguais ao limite
+superior fornecido como rótulo.
+Com histogramas nativos, você pode examinar observações dentro de limites
+específicos com a função
+[`histogram_fraction()`](/docs/prometheus/latest/querying/functions/#histogram_fraction)
+(para calcular frações de observações) e os [operadores de recorte]() (para
+filtrar a faixa de observações desejada).
+
 Consulte [histograms e summaries](/docs/practices/histograms) para obter
-detalhes sobre o uso de histograms e as diferenças em relação aos
+detalhes sobre o uso de histogramas e as diferenças em relação aos
 [summaries](#summary).
 
-NOTA: A partir do Prometheus v2.40, há suporte experimental para histograms
-nativos.
-Um histogram nativo requer apenas uma série temporal, que inclui um número
-dinâmico de intervalos (buckets), além da soma e da contagem de observações.
-Os histograms nativos permitem uma resolução muito maior a uma fração do custo.
-A documentação detalhada será disponibilizada assim que os histograms nativos
-estiverem mais próximos de se tornarem um recurso estável.
-
-NOTA: A partir do Prometheus v3.0, os valores do rótulo `le` dos histograms
+NOTA: A partir do Prometheus v3.0, os valores do rótulo `le` dos histogramas
 clássicos são normalizados durante a ingestão para seguir o formato dos
 [Números Canônicos do OpenMetrics](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
 
-Documentação de uso da biblioteca cliente para histograms:
+Documentação de uso da biblioteca de instrumentação para histogramas:
 
 - [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Histogram)
 - [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#histogram)
@@ -118,9 +178,8 @@ Documentação de uso da biblioteca cliente para histograms:
 
 ## Summary
 
-Semelhante a um _histogram_, um _summary_ (resumo, em português) amostra
-observações (geralmente coisas como duração de requisições e tamanhos de
-respostas).
+Semelhante a um _histograma_, um _summary_ (resumo) amostra observações
+(geralmente coisas como duração de requisições e tamanhos de respostas).
 Embora também forneça uma contagem total de observações e uma soma de todos os
 valores observados, ele calcula quantis configuráveis em uma janela de tempo
 deslizante.
@@ -135,14 +194,14 @@ temporais durante uma coleta:
 - A **contagem** de eventos observados, exposta como `<basename>_count`.
 
 Consulte [histograms e summaries](/docs/practices/histograms) para explicações
-detalhadas sobre quantis-φ, uso de summary e diferenças em relação a
-[histograms](#histogram).
+detalhadas sobre quantis-φ, uso de summaries e diferenças em relação a
+[histogramas](#histogram).
 
 NOTA: A partir do Prometheus v3.0, os valores do rótulo `quantile` são
 normalizados durante a ingestão para seguir o formato dos
 [Números Canônicos do OpenMetrics](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md#considerations-canonical-numbers).
 
-Documentação de uso da biblioteca cliente para summaries:
+Documentação de uso da biblioteca de instrumentação para summaries:
 
 - [Go](http://godoc.org/github.com/prometheus/client_golang/prometheus#Summary)
 - [Java](https://prometheus.github.io/client_java/getting-started/metric-types/#summary)

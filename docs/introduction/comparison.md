@@ -94,7 +94,7 @@ longo prazo, o Graphite pode ser uma escolha melhor.
 
 ## Prometheus vs. InfluxDB
 
-O InfluxDB (https://influxdata.com/) é um banco de dados de séries temporais de
+O [InfluxDB](https://influxdata.com/) é um banco de dados de séries temporais de
 código aberto, com uma opção comercial para escalonamento e clustering.
 O projeto InfluxDB foi lançado quase um ano após o início do desenvolvimento do
 Prometheus, portanto, não pudemos considerá-lo como uma alternativa na época.
@@ -104,7 +104,7 @@ e ambos os sistemas são voltados para casos de uso ligeiramente diferentes.
 ### Escopo
 
 Para uma comparação justa, também devemos considerar o
-Kapacitor (https://github.com/influxdata/kapacitor) juntamente com o InfluxDB,
+[Kapacitor](https://github.com/influxdata/kapacitor) juntamente com o InfluxDB,
 pois em conjunto, eles abordam o mesmo espaço de problemas que o Prometheus e o
 Alertmanager.
 
@@ -208,14 +208,15 @@ serviços e suporte comerciais.
 
 ## Prometheus vs. OpenTSDB
 
-O OpenTSDB (http://opentsdb.net/) é um banco de dados distribuído de séries
-temporais baseado em Hadoop (http://hadoop.apache.org/) e HBase
-(http://hbase.apache.org/).
+O [OpenTSDB](http://opentsdb.net/) é um banco de dados distribuído de séries
+temporais baseado em [Hadoop](http://hadoop.apache.org/) e
+[HBase](http://hbase.apache.org/).
 
 ### Escopo
 
-As mesmas diferenças de escopo do Graphite
-(http://docs/introduction/comparison/#prometheus-vs-graphite) se aplicam aqui.
+As mesmas diferenças de escopo do
+[Graphite](http://docs/introduction/comparison/#prometheus-vs-graphite) se
+aplicam aqui.
 
 ### Modelo de dados
 
@@ -245,8 +246,8 @@ particionamento explícito quando a capacidade de um único nó for excedida.
 O Prometheus oferece uma linguagem de consulta muito mais rica, pode lidar com
 métricas de cardinalidade mais alta e faz parte de um sistema de monitoramento
 completo.
-Se você já utiliza o Hadoop e prioriza o armazenamento de longo prazo em
-detrimento desses benefícios, o OpenTSDB é uma boa escolha.
+Se você já usa o Hadoop e prioriza o armazenamento de longo prazo em detrimento
+desses benefícios, o OpenTSDB é uma boa escolha.
 
 ## Prometheus vs. Nagios
 
@@ -299,7 +300,7 @@ dinâmico ou baseado em nuvem, o Prometheus é uma boa opção.
 O [Sensu](https://sensu.io) é um pipeline de monitoramento e observabilidade de
 código aberto com uma distribuição comercial que oferece recursos adicionais
 para escalabilidade.
-Ele pode reutilizar plugins existentes do Nagios.
+Ele pode reusar plugins existentes do Nagios.
 
 ### Escopo
 

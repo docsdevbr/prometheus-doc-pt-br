@@ -219,7 +219,7 @@ nova linguagem, consulte os
 
 Sim, o [Node Exporter](https://github.com/prometheus/node_exporter) expõe um
 extenso conjunto de métricas em nível de máquina no Linux e outros sistemas
-Unix, como uso de CPU, memória, utilização de disco, preenchimento do sistema de
+Unix, como uso de CPU, memória, uso de disco, preenchimento do sistema de
 arquivos e largura de banda da rede.
 
 ### Posso monitorar dispositivos de rede?
